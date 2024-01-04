@@ -3,7 +3,6 @@ import random
 import time
 import datetime
 import discord
-import interactions
 from discord.ext import commands
 from discord import app_commands, message
 from dotenv import load_dotenv
