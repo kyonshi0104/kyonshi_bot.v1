@@ -29,13 +29,8 @@ class DeleteButton(discord.ui.Button):
 
 #words一覧
 
-ngwords = ['死ね', 'カス', 'くたばれ', '010509', '童貞']
-kitanaiwords = [
-    'sex', 'まんこ', 'おちんぽ', 'オチンポ', 'うんこ', 'おなに', 'おっぱい', 'うんち', '精子', 'ちんちん',
-    'ちんこ', 'いぐいぐ', 'シコる', 'シコシコ', 'きんたま', '金玉', '010409', '114514', '4545',
-    'シコって', 'しこって', 'しこる', 'しこしこ', '1919', '性欲', 'ぱんつ', 'パンツ', 'あなる', 'アナル',
-    'オナニ', 'けつあな', 'ふたなり', 'SEX', 'Sex', 'ちんぽ', '童貞','射精','おねしょ'
-]
+ngwords = ['010509']
+kitanaiwords = ['010409']
 aisatu = [
     'おはよう', 'おやすみ', 'こんばんは', 'やぁ!', 'よぉ!', 'よお!', 'よう!', 'よぅ!', 'やぁ！', 'やあ！',
     'よぉ！', 'よお！', 'よう！', 'よぅ！', 'おはよう!', 'おは', 'こん'
@@ -129,8 +124,8 @@ async def sey(interaction: discord.Interaction, text: str):
     await interaction.channel.send(
         f"{interaction.user.display_name}さん！！人に濡れ衣着せようとするのやめようね！！m9(^Д^)")
     saylog = {interaction.user.display_name}
-    for channel in client.get_all_channels():
-      if channel.id == 1186985140711325748:
+    for channel in client.get_guild(1191687272035270666).channels:
+      if channel.id == 1191691984889446421:
         now = datetime.datetime.now(
             datetime.timezone(datetime.timedelta(hours=9)))
         say_bad_m = discord.Embed(
@@ -147,8 +142,8 @@ async def sey(interaction: discord.Interaction, text: str):
       await interaction.channel.send(
           f"みんな{interaction.user.display_name}が{text}って私に言わそうとしてきたぞ")
       saylog = {interaction.user.display_name}
-      for channel in client.get_all_channels():
-        if channel.id == 1186985140711325748:
+      for channel in client.get_guild(1191687272035270666).channels:
+        if channel.id == 1191691984889446421:
           now = datetime.datetime.now(
               datetime.timezone(datetime.timedelta(hours=9)))
           say_bad_n = discord.Embed(
@@ -163,8 +158,8 @@ async def sey(interaction: discord.Interaction, text: str):
     if mention in text:
       await interaction.response.send_message("everyoneメンションまたはhereメンションを検知しました。", ephemeral=True)
       saylog = {interaction.user.display_name}
-      for channel in client.get_all_channels():
-        if channel.id == 1186985140711325748:
+      for channel in client.get_guild(1191687272035270666).channels:
+        if channel.id == 1191691984889446421:
           now = datetime.datetime.now(
               datetime.timezone(datetime.timedelta(hours=9)))
           say_bad_g = discord.Embed(
@@ -181,8 +176,8 @@ async def sey(interaction: discord.Interaction, text: str):
       await interaction.channel.send(
           f"みんな{interaction.user.display_name}が卑猥なこと私に言わそうとしてきたぞ")
       saylog = {interaction.user.display_name}
-      for channel in client.get_all_channels():
-        if channel.id == 1186985140711325748:
+      for channel in client.get_guild(1191687272035270666).channels:
+        if channel.id == 1191691984889446421:
           now = datetime.datetime.now(
               datetime.timezone(datetime.timedelta(hours=9)))
           say_bad_h = discord.Embed(
@@ -198,8 +193,8 @@ async def sey(interaction: discord.Interaction, text: str):
     await interaction.response.send_message("送信しました", ephemeral=True)
     await interaction.channel.send(text)
     saylog = {interaction.user.display_name}
-    for channel in client.get_all_channels():
-      if channel.id == 1186985140711325748:
+    for channel in client.get_guild(1191687272035270666).channels:
+      if channel.id == 1191691984889446421:
         now = datetime.datetime.now(
             datetime.timezone(datetime.timedelta(hours=9)))
         say_ok = discord.Embed(
@@ -220,8 +215,8 @@ async def on_ready():
   await client.change_presence(status=discord.Status.online,
                                activity=discord.Game(f"test"))
 
-  for channel in client.get_all_channels():
-    if channel.id == 1187280206734573668:
+  for channel in client.get_guild(1191687272035270666).channels:
+    if channel.id == 1191687272903475302:
       now = datetime.datetime.now(
           datetime.timezone(datetime.timedelta(hours=9)))
       kidou = discord.Embed(
@@ -243,7 +238,7 @@ async def on_message(message):
     return
   if message.content == 'ky!invite':
     await message.reply(
-        '[botのリンクだよ](<https://discord.com/api/oauth2/authorize?client_id=1172002051006406707&permissions=0&scope=bot>)'
+        '[botのリンクだよ](<https://discord.com/oauth2/authorize?client_id=1190912307790872637&permissions=67061618699863&scope=bot>)'
     )
 
   if message.author.bot:
@@ -400,7 +395,7 @@ class Client(discord.Client):
     self.tree = discord.CommandTree(client=self)
 
   async def setup_hook(self) -> None:
-    self.tree.add_command(wpoll)
+    self.tree.add_command(say)
     await self.tree.sync()
 
 
