@@ -286,7 +286,7 @@ async def on_message(message):
     special = discord.Embed(
         title='Special Thanks!!',
         description=
-        '**nr.nell** pythonの基礎を教えてくれた\n\n**akku**    botの常時実行に協力してくれた\n\n**音猫**    たまにサポートしてくれた\n\n**先輩,たけとら**    botの下ネタ対策testに図らずも協力してくれた\n\n**Suger** 同じくtestに協力してくれた\n\n**🪐**   modal等pythonのコードで分からない所を教えてくれた。',
+        '**nr.nell** pythonの基礎を教えてくれた\n\n**akku**    サーバーを貸してくれた \n\n**音猫**    たまにサポートしてくれた\n\n**先輩,たけとら**    botの下ネタ対策testに図らずも協力してくれた\n\n**Suger** 同じくtestに協力してくれた\n\n**🪐**   modal等pythonのコードで分からない所を教えてくれた。',
         color=discord.Color.blue())
     await message.channel.send(embed=special)
 
