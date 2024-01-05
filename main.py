@@ -294,8 +294,8 @@ async def on_message(message):
 
   if message.author.bot:
     return
-  if message.content == '<@1172002051006406707>':
-    if message.author.id == 1102483377786998784:
+  if message.content == '<@1190912307790872637>':
+    if message.author.id == 1189807997669609552:
      await message.channel.send('どうかなさいましたかkyonshi様')
      return
     else:
@@ -321,7 +321,7 @@ async def on_message(message):
 
   for i in ngwords:
     if i in message.content:
-      if '<@1172002051006406707>' in message.content:
+      if '<@1190912307790872637>' in message.content:
         await message.reply('うるせぇぶち殺すぞ')
       else:
         if i == message.content:
@@ -332,7 +332,7 @@ async def on_message(message):
 
   for i in kitanaiwords:
     if i in message.content:
-      if '<@1172002051006406707>' in message.content:
+      if '<@1190912307790872637>' in message.content:
         await message.reply('きっしょ')
       else:
         await message.reply('帰れ')
@@ -340,7 +340,7 @@ async def on_message(message):
 
   for i in owa:
     if i in message.content:
-      if '<@1172002051006406707>' in message.content:
+      if '<@1190912307790872637>' in message.content:
         await message.reply('何でいちいちメンションして言ったんだ　必要なくね')
       else:
         if i == message.content:
@@ -356,7 +356,7 @@ async def on_message(message):
 
   for i in oti:
     if i in message.content:
-      if '<@1172002051006406707>' in message.content:
+      if '<@1190912307790872637>' in message.content:
         await message.reply('何でいちいちメンションして言ったんだ　必要なくね')
       else:
         if i == message.content:
@@ -375,8 +375,8 @@ async def on_message(message):
 
   if client.user in message.mentions and 'って言って' in message.content:
     response = message.content.split('って言って')[0]
-    if '<@1172002051006406707>' in response:
-      response = response.replace('<@1172002051006406707>', '')
+    if '<@1190912307790872637>' in response:
+      response = response.replace('<@1190912307790872637>', '')
     elif any(ngword in message.content for ngword in ngwords):
       return
     elif any(kitanaiword in message.content for kitanaiword in kitanaiwords):
