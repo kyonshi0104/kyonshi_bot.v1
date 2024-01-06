@@ -246,11 +246,11 @@ async def on_message(message):
   if message.autor.bot:
     return
   if message.content == "!servers":
-  guildlist = client.guilds
-  server_info = ""
-  for server in guildlist:
-      server_info += f"Server name: {server.name}, Server ID: {server.id}\n"
-  await message.channel.send(server_info)
+   guildlist = client.guilds
+   server_info = ""
+   for server in guildlist:
+       server_info += f"Server name: {server.name}, Server ID: {server.id}\n"
+   await message.channel.send(server_info)
 
   if message.author.bot:
     return
