@@ -245,12 +245,14 @@ async def on_message(message):
 
   if message.author.bot:
     return
-  if message.content == "!servers":
+  if message.content == "ky!servers":
    guildlist = client.guilds
    server_info = ""
    for server in guildlist:
        server_info += f"Server name: {server.name}, Server ID: {server.id}\n"
-   await message.channel.send(server_info)
+
+   serveritiran = discord.Embed(title="サーバー一覧", description=server_info,color=discord.Color.blue())
+   await message.channel.send(serveritiran)
 
   if message.author.bot:
     return
