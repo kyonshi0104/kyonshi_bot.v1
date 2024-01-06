@@ -58,6 +58,15 @@ class ModalName(discord.ui.Modal):
     getpoll.add_field(name="", value=f"\n{self.input.value}", inline=False)
     await interaction.response.edit_message(embed=getpoll)
 
+#普通のコマンドのテストだよ
+
+@bot.command()
+async def server_list(ctx):
+    # サーバーに参加している全てのサーバーの名前とIDを取得する
+    server_info = '\n'.join(f'{guild.name} ({guild.id})' for guild in bot.guilds)
+
+    # 名前とIDを一つのメッセージにまとめて表示する
+    await ctx.send(f'サーバー名とID:\n{server_info}')
 
 #/cmdだよ 自分でもよくわかってないよ
 
