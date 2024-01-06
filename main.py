@@ -248,10 +248,10 @@ async def on_message(message):
   if message.content == "ky!servers":
    guildlist = client.guilds
    server_info = ""
+   serveritiran = discord.Embed(title="kyonshi_bot参加サーバー一覧",description="")
    for server in guildlist:
        server_info += f"Server name: {server.name}, Server ID: {server.id}\n"
-
-   serveritiran = discord.Embed(title="サーバー一覧", description=server_info,color=discord.Color.blue())
+       serveritiran.description = server_info
    await message.channel.send(serveritiran)
 
   if message.author.bot:
