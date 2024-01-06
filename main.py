@@ -243,7 +243,7 @@ async def on_message(message):
 
   #ky!コマンドだよ
 
-  if message.autor.bot:
+  if message.author.bot:
     return
   if message.content == "!servers":
    guildlist = client.guilds
