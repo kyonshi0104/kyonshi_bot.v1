@@ -243,6 +243,20 @@ async def on_message(message):
 
   if message.author.bot:
     return
+  if message.content in ('ky!check_permissions'):
+    member = message.mentions[0]
+    perms = member.guild_permissions
+    embed = discord.Embed(title=f"Permissions for {member}", color=0x00ff00)
+    embed.add_field(name="administrator", value=perms.administrator)
+    embed.add_field(name="kick members", value=perms.kick_members)
+    embed.add_field(name="ban members", value=perms.ban_members)
+    embed.add_field(name="manage channels", value=perms.manage_channels)
+    embed.add_field(name="manage roles", value=perms.manage_roles)
+    embed.add_field(name="manage messages", value=perms.manage_messages)
+    await message.channel.send(embed=embed)
+
+  if message.author.bot:
+    return
   if message.content == "ky!debug_server":
     if message.author.id != 1189807997669609552:
       await message.channel.send("そのコマンドを実行する権限がありません。")
