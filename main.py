@@ -243,15 +243,18 @@ async def on_message(message):
 
   if message.author.bot:
     return
-  if message.author.id == 1189807997669609552:
-   if message.content == "ky!servers":
-    guildlist = client.guilds
-    server_info = ""
-    serveritiran = discord.Embed(title="kyonshi_bot参加サーバー一覧",description="参加サーバーの一覧を表示します\n",color=discord.Color.blue())
-    for server in guildlist:
-        server_info += f" {server.name}, : {server.id}\n"
-        serveritiran.description = server_info
-    await message.channel.send(embed=serveritiran)
+  if message.content == "ky!debug_server":
+    if message.author.id != 1189807997669609552:
+      await message.channel.send("そのコマンドを実行する権限がありません。")
+      return
+    if message.author.id == 1189807997669609552:
+     guildlist = client.guilds
+     server_info = ""
+     serveritiran = discord.Embed(title="kyonshi_bot参加サーバー一覧",description="参加サーバーの一覧を表示します\n",color=discord.Color.blue())
+     for server in guildlist:
+         server_info += f" {server.name}, : {server.id}\n"
+         serveritiran.description = server_info
+     await message.channel.send(embed=serveritiran)
 
   if message.author.bot:
     return
