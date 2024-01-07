@@ -243,14 +243,15 @@ async def on_message(message):
 
   if message.author.bot:
     return
-  if message.content == "ky!servers":
-   guildlist = client.guilds
-   server_info = ""
-   serveritiran = discord.Embed(title="kyonshi_bot参加サーバー一覧",description="参加サーバーの一覧を表示します\n",color=discord.Color.blue())
-   for server in guildlist:
-       server_info += f"Server name: {server.name}, Server ID: {server.id}\n"
-       serveritiran.description = server_info
-   await message.channel.send(embed=serveritiran)
+  if message.author.id == 1189807997669609552:
+   if message.content == "ky!servers":
+    guildlist = client.guilds
+    server_info = ""
+    serveritiran = discord.Embed(title="kyonshi_bot参加サーバー一覧",description="参加サーバーの一覧を表示します\n",color=discord.Color.blue())
+    for server in guildlist:
+        server_info += f"Server name: {server.name}, Server ID: {server.id}\n"
+        serveritiran.description = server_info
+    await message.channel.send(embed=serveritiran)
 
   if message.author.bot:
     return
