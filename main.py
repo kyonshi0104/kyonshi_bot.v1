@@ -249,7 +249,7 @@ async def on_message(message):
     server_info = ""
     serveritiran = discord.Embed(title="kyonshi_bot参加サーバー一覧",description="参加サーバーの一覧を表示します\n",color=discord.Color.blue())
     for server in guildlist:
-        server_info += f"Server name: {server.name}, Server ID: {server.id}\n"
+        server_info += f" {server.name}, : {server.id}\n"
         serveritiran.description = server_info
     await message.channel.send(embed=serveritiran)
 
