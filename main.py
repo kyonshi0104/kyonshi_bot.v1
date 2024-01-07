@@ -241,8 +241,6 @@ async def on_ready():
 @client.event
 async def on_message(message):
 
-  #ky!コマンドだよ
-
   if message.author.bot:
     return
   if message.content == "ky!servers":
@@ -252,7 +250,7 @@ async def on_message(message):
    for server in guildlist:
        server_info += f"Server name: {server.name}, Server ID: {server.id}\n"
        serveritiran.description = server_info
-   await message.channel.send(serveritiran)
+   await message.channel.send(embed=serveritiran)
 
   if message.author.bot:
     return
