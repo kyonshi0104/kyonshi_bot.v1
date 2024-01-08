@@ -198,9 +198,9 @@ async def sey(interaction: discord.Interaction, text: str):
           await channel.send(embed=say_bad_h)
       return
   else:
-    text = text.replace("@", "＠")
+    nomention = discord.AllowedMentions(roles=False)
     await interaction.response.send_message("送信しました", ephemeral=True)
-    await interaction.channel.send(text)
+    await interaction.channel.send(text, allowed_mentions=nomention)
     saylog = {interaction.user.display_name}
     for channel in client.get_guild(1191687272035270666).channels:
       if channel.id == 1191691984889446421:
@@ -243,17 +243,29 @@ async def on_message(message):
 
   if message.author.bot:
     return
-  if message.content in ('ky!check_permissions'):
-    member = message.mentions[0]
-    perms = member.guild_permissions
-    embed = discord.Embed(title=f"Permissions for {member}", color=0x00ff00)
-    embed.add_field(name="administrator", value=perms.administrator)
-    embed.add_field(name="kick members", value=perms.kick_members)
-    embed.add_field(name="ban members", value=perms.ban_members)
-    embed.add_field(name="manage channels", value=perms.manage_channels)
-    embed.add_field(name="manage roles", value=perms.manage_roles)
-    embed.add_field(name="manage messages", value=perms.manage_messages)
-    await message.channel.send(embed=embed)
+  if message.content.startwith("ky!check_permissions"):
+    if len(message.mentions) != 1:
+      member = message.author
+      perms = member.guild_permissions
+      embed = discord.Embed(title=f"Permissions for {member}", color=0x00ff00)
+      embed.add_field(name="administrator", value=perms.administrator)
+      embed.add_field(name="kick members", value=perms.kick_members)
+      embed.add_field(name="ban members", value=perms.ban_members)
+      embed.add_field(name="manage channels", value=perms.manage_channels)
+      embed.add_field(name="manage roles", value=perms.manage_roles)
+      embed.add_field(name="manage messages", value=perms.manage_messages)
+      await message.channel.send(embed=embed)
+    else:
+      member = message.mentions[0]
+      perms = member.guild_permissions
+      embed = discord.Embed(title=f"Permissions for {member}", color=0x00ff00)
+      embed.add_field(name="administrator", value=perms.administrator)
+      embed.add_field(name="kick members", value=perms.kick_members)
+      embed.add_field(name="ban members", value=perms.ban_members)
+      embed.add_field(name="manage channels", value=perms.manage_channels)
+      embed.add_field(name="manage roles", value=perms.manage_roles)
+      embed.add_field(name="manage messages", value=perms.manage_messages)
+      await message.channel.send(embed=embed)
 
   if message.author.bot:
     return
