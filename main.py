@@ -247,18 +247,18 @@ async def on_message(message):
     return
   if message.content.startwith("ky!check_permissions"):
     if len(message.mentions) != 1:
-      member = message.author
+      await message.reply("ユーザーを指定してください。")
     else:
       member = message.mentions[0]
-    perms = member.guild_permissions
-    embed = discord.Embed(title=f"Permissions for {member}", color=0x00ff00)
-    embed.add_field(name="administrator", value=perms.administrator)
-    embed.add_field(name="kick members", value=perms.kick_members)
-    embed.add_field(name="ban members", value=perms.ban_members)
-    embed.add_field(name="manage channels", value=perms.manage_channels)
-    embed.add_field(name="manage roles", value=perms.manage_roles)
-    embed.add_field(name="manage messages", value=perms.manage_messages)
-    await message.channel.send(embed=embed)
+      perms = member.guild_permissions
+      embed = discord.Embed(title=f"Permissions for {member}", color=0x00ff00)
+      embed.add_field(name="administrator", value=perms.administrator)
+      embed.add_field(name="kick members", value=perms.kick_members)
+      embed.add_field(name="ban members", value=perms.ban_members)
+      embed.add_field(name="manage channels", value=perms.manage_channels)
+      embed.add_field(name="manage roles", value=perms.manage_roles)
+      embed.add_field(name="manage messages", value=perms.manage_messages)
+      await message.channel.send(embed=embed)
 
   if message.author.bot:
     return
