@@ -240,9 +240,6 @@ async def on_ready():
 @client.event
 async def on_message(message):
 
-  if message.content == "ky!reload":
-    sys.exit()
-
   if message.author.bot:
     return
   if message.content.startwith("ky!check_permissions"):
