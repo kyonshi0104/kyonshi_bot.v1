@@ -242,7 +242,7 @@ async def on_message(message):
 
   if message.author.bot:
     return
-  if message.content.startwith("ky!check_permissions"):
+  if message.content.startswith("ky!check_permissions"):
     if len(message.mentions) != 1:
       await message.reply("ユーザーを指定してください。")
     else:
