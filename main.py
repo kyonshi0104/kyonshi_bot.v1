@@ -4,6 +4,7 @@ import random
 import time
 import datetime
 import discord
+from datetime import timedelta
 from discord.ext import commands
 from discord import app_commands, message
 from dotenv import load_dotenv
@@ -68,6 +69,15 @@ async def server_list(ctx):
     await ctx.send(f'サーバー名とID:\n{server_info}')
 
 #/cmdだよ 自分でもよくわかってないよ
+
+@tree.command(name="timeout", description="指定したユーザーをタイムアウトします。(timeは分で指定します)")
+async def timeoutcmd(interaction: discord.Interaction, user: discord.Member, time: int, reason: str):
+      duration = datetime.timedelta(minutes=time)
+      if user.guild_permissions.timeout_members:
+          await user.timeout(duration,reason=reason)
+          await interaction.response.send_message(f"✅{user.mention} をタイムアウトしました！")
+      else:
+          await interaction.response.send_message(f"{user.mention}はタイムアウト権限を持っていません。")
 
 @tree.command(name="wpoll", description="調整中")
 async def poll(interaction: discord.Interaction, title: str):
@@ -433,7 +443,7 @@ class Client(discord.Client):
     self.tree = discord.CommandTree(client=self)
 
   async def setup_hook(self) -> None:
-    self.tree.add_command(say)
+    self.tree.add_command(timeoutcmd)
     await self.tree.sync()
 
 
