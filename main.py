@@ -73,7 +73,7 @@ async def server_list(ctx):
 @tree.command(name="timeout", description="指定したユーザーをタイムアウトします。(timeは分で指定します)")
 async def timeoutcmd(interaction: discord.Interaction, user: discord.Member, time: int, reason: str):
       duration = datetime.timedelta(minutes=time)
-      if user.guild_permissions.timeout_members:
+      if user.guild_permissions.mute_members:
           await user.timeout(duration,reason=reason)
           await interaction.response.send_message(f"✅{user.mention} をタイムアウトしました！")
       else:
