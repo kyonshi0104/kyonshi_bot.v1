@@ -71,13 +71,13 @@ async def server_list(ctx):
 #/cmdだよ 自分でもよくわかってないよ
 
 @tree.command(name="timeout", description="指定したユーザーをタイムアウトします。(timeは分で指定します)")
-async def timeoutcmd(interaction: discord.Interaction, user: discord.Member, time: int, reason: str):
+async def timeoutcmd(interaction: discord.Interaction, member: discord.Member, time: int, reason: str):
       duration = datetime.timedelta(minutes=time)
-      if user.guild_permissions.mute_members:
-          await user.timeout(duration,reason=reason)
-          await interaction.response.send_message(f"✅{user.mention} をタイムアウトしました！")
+      if interaction.user.guild_permissions.moderate_members:
+          await member.timeout(duration,reason=reason)
+          await interaction.response.send_message(f"✅{member.mention} をタイムアウトしました！")
       else:
-          await interaction.response.send_message(f"{user.mention}はタイムアウト権限を持っていません。")
+          await interaction.response.send_message(f"{interaction.user.mention}はタイムアウト権限を持っていません。")
 
 @tree.command(name="wpoll", description="調整中")
 async def poll(interaction: discord.Interaction, title: str):
@@ -249,6 +249,13 @@ async def on_ready():
 
 @client.event
 async def on_message(message):
+
+  if message.author.bot:
+    return
+  if message.content.startswith('ky!reroad'):
+    if message.author.id == 917563346340707338:
+      await message.channel.send('再起動します')
+      sys.exit()
 
   if message.author.bot:
     return
