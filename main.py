@@ -13,6 +13,8 @@ client = discord.Client(intents=discord.Intents.all())
 
 bot = commands.Bot(command_prefix="ky!", intents=discord.Intents.all())
 
+bot.webhooks = {} 
+
 tree = app_commands.CommandTree(client)
 
 intent = discord.Intents.default()
@@ -28,6 +30,8 @@ class DeleteButton(discord.ui.Button):
 
 
 #words一覧
+
+GLOBALCHAT = ("ky-gc")
 
 ngwords = ['010509']
 kitanaiwords = ['010409']
@@ -259,6 +263,40 @@ async def on_ready():
 @client.event
 async def on_message(message):
 
+  #global_chat
+
+  if message.author.bot:
+    return
+  if message.author.id == bot.user.id:
+    return
+  if not message.channel.name == GLOBALCHAT:
+    return
+  # 邪魔な元のメッセージは消しておく
+  await message.delete()
+
+  for i in bot.webhooks.values():
+    # Webhookオブジェ作成
+    wh = discord.Webhook.from_url(i)
+
+    # メッセージに画像が添付されているか
+    if message.attachments:
+        await wh.send(
+            content=message.content, # メッセージの内容
+            username=message.author, # ユーザー名設定
+            avatar_url=message.author.avatar, # アイコン設定
+            files=[await i.to_file() for i in message.attachments], # 画像とか
+            allowed_mentions=discord.AllowedMentions.none() # メンション無効化
+        )
+    else:
+        await wh.send(
+            content=message.content, # メッセージの内容
+            username=message.author, # ユーザー名設定
+            avatar_url=message.author.avatar, # アイコン設定
+            allowed_mentions=discord.AllowedMentions.none() # メンション無効化
+        )
+
+  #ky!cmd
+
   if message.author.bot:
     return
   if message.content== 'ky!reroad':
@@ -450,6 +488,21 @@ async def on_message(message):
       return
     response = response.replace("@", "＠")
     await message.channel.send(response)
+
+@client.event
+async def on_guild_join(guild):
+  for channel in guild.channels:
+    if channel.name == GLOBALCHAT:
+      webhook = await channel.create_webhook(name="globalchat")
+      bot.webhooks[guild.id] = webhook.url
+      return
+
+@client.event
+async def on_guild_channel_create(channel):
+   if channel.name == GLOBALCHAT:
+      webhook = await channel.create_webhook(name="globalchat")
+      bot.webhooks[channel.guild.id] = webhook.url
+      return
 
 
 class Client(discord.Client):
