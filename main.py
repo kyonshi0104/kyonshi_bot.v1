@@ -261,10 +261,10 @@ async def on_message(message):
 
   if message.author.bot:
     return
-  if message.content.startswith('ky!reroad'):
-    if message.author.id == 917563346340707338:
-      await message.channel.send('再起動します')
-      sys.exit()
+  if message.content== 'ky!reroad':
+    global client
+    await client.close()
+    sys.exit()
 
   if message.author.bot:
     return
