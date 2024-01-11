@@ -75,7 +75,7 @@ async def server_list(ctx):
 #/cmdだよ 自分でもよくわかってないよ
 
 @tree.command(name="timeout", description="指定したユーザーをタイムアウトします。(timeは分で指定します)")
-async def timeoutcmd(interaction: discord.Interaction, member: discord.Member, time: int, reason: str):
+async def timeoutcmd(interaction: discord.Interaction, member: discord.Member, time: int, reason: str = (f"{interaction.user.mention}が{member.mention}を{time}分間timeoutしました。")):
       duration = datetime.timedelta(minutes=time)
       if interaction.user == member:
           await interaction.response.send_message("自分自身をタイムアウトすることはできません。")
@@ -263,7 +263,7 @@ async def on_ready():
 @client.event
 async def on_message(message):
 
-  #global_chat
+  #global_chat(動きません)
 
   if message.author.bot:
     return
