@@ -308,7 +308,7 @@ async def on_message(message):
         banuser = message.mentions[0]
         for server in client.guilds:
           try:
-            await ban(user = banuser , reason = None , delete_message_days = 1)
+            await server.ban(user = banuser , reason = None , delete_message_days = 1)
             await message.channel.send(f"{banuser}を{server.name}からBANしました")
           except Exception as e:
             print(e)
