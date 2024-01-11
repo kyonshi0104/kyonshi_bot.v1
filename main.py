@@ -5,6 +5,7 @@ import time
 import datetime
 import discord
 from datetime import timedelta
+from discord import user
 from discord.ext import commands
 from discord import app_commands, message
 from dotenv import load_dotenv
@@ -75,7 +76,7 @@ async def server_list(ctx):
 #/cmdだよ 自分でもよくわかってないよ
 
 @tree.command(name="timeout", description="指定したユーザーをタイムアウトします。(timeは分で指定します)")
-async def timeoutcmd(interaction: discord.Interaction, member: discord.Member, time: int, reason: str = (f"{interaction.user.mention}が{member.mention}を{time}分間timeoutしました。")):
+async def timeoutcmd(interaction: discord.Interaction, member: discord.Member, time: int, reason: str = ("理由は指定されていません")):
       duration = datetime.timedelta(minutes=time)
       if interaction.user == member:
           await interaction.response.send_message("自分自身をタイムアウトすることはできません。")
