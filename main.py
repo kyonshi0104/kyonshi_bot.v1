@@ -300,6 +300,24 @@ async def on_message(message):
 
   if message.author.bot:
     return
+  if message.content.startswith("ky!debug_global.ban"):
+    if message.author.id == 1189807997669609552:
+      if len(message.mentions) != 1:
+        await message.channel.send("ユーザーを選択してください")
+      else:
+        banuser = message.mentions[0]
+        for server in client.guilds:
+          try:
+            await ban(user = banuser , reason = None , delete_message_days = 1)
+            await message.channel.send(f"{banuser}を{server.name}からBANしました")
+          except Exception as e:
+            print(e)
+            await message.channel.send(f"{banuser}を{server.name}からBANできませんでした")
+
+  #GBANコマンド。指定ユーザーしか使えません。
+
+  if message.author.bot:
+    return
   if message.content== 'ky!reroad':
     global client
     await client.close()
