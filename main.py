@@ -31,6 +31,7 @@ class DeleteButton(discord.ui.Button):
 
 
 #words一覧
+banned_users = []
 
 GLOBALCHAT = ("ky-gc")
 
@@ -280,6 +281,7 @@ async def on_message(message):
       else:
         banuser = split_message[1]
         gbanuser = await client.fetch_user(banuser)
+        banned_users.append(banuser)
         for server in client.guilds:
           try:
             await server.ban(user = gbanuser , reason = None , delete_message_days = 1)
