@@ -270,10 +270,14 @@ async def on_message(message):
     return
   if message.content.startswith("ky!debug_global.ban"):
     if message.author.id == 1189807997669609552:
-      if len(message.mentions) != 1:
+      split_message = message.content.split()
+      if len(split_message) > 2:
+        await message.channel.send("ユーザーIDが指定されていません。")
+        return
+      elif len(message.mentions) == 1:
         await message.channel.send("ユーザーを選択してください")
       else:
-        banuser = message.mentions[0]
+        banuser = split_message[1]
         for server in client.guilds:
           try:
             await server.ban(user = banuser , reason = None , delete_message_days = 1)
