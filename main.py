@@ -274,8 +274,9 @@ async def on_message(message):
       if len(split_message) > 1:
         await message.channel.send("ユーザーIDが指定されていません。")
         return
-      elif len(message.mentions) == 1:
+      if len(message.mentions) == 1:
         await message.channel.send("ユーザーを選択してください")
+        return
       else:
         banuser = split_message[1]
         for server in client.guilds:
