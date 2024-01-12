@@ -279,13 +279,14 @@ async def on_message(message):
         return
       else:
         banuser = split_message[1]
+        gbanuser = await client.fetch_user(banuser)
         for server in client.guilds:
           try:
-            await server.ban(user = banuser , reason = None , delete_message_days = 1)
-            await message.channel.send(f"{banuser}を{server.name}からBANしました")
+            await server.ban(user = gbanuser , reason = None , delete_message_days = 1)
+            await message.channel.send(f"{gbanuser}を{server.name}からBANしました")
           except Exception as e:
             print(e)
-            await message.channel.send(f"{banuser}を{server.name}からBANできませんでした")
+            await message.channel.send(f"{gbanuser}を{server.name}からBANできませんでした")
 
   #GBANコマンド。指定ユーザーしか使えません。
 
