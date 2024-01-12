@@ -264,34 +264,6 @@ async def on_ready():
 @client.event
 async def on_message(message):
 
-  #global_chat(動きません)
-
-  if message.author.bot:
-    return
-  if message.author.id == bot.user.id:
-    return
-  if not message.channel.name == GLOBALCHAT:
-    return
-  # 邪魔な元のメッセージは消しておく
-  await message.delete()
-
-  # メッセージに画像が添付されているか
-  if message.attachments:
-        await wh.send(
-            content=message.content, # メッセージの内容
-            username=message.author, # ユーザー名設定
-            avatar_url=message.author.avatar, # アイコン設定
-            files=[await i.to_file() for i in message.attachments], # 画像とか
-            allowed_mentions=discord.AllowedMentions.none() # メンション無効化
-        )
-  else:
-        await wh.send(
-            content=message.content, # メッセージの内容
-            username=message.author, # ユーザー名設定
-            avatar_url=message.author.avatar, # アイコン設定
-            allowed_mentions=discord.AllowedMentions.none() # メンション無効化
-        )
-
   #ky!cmd
 
   if message.author.bot:
