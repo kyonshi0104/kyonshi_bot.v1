@@ -288,7 +288,7 @@ async def on_message(message):
             await message.channel.send(f"{gbanuser}を{server.name}からBANしました")
           except Exception as e:
             print(e)
-            await message.channel.send(f"{gbanuser}を{server.name}からBANできませんでした。権限不足または既にBANされています。")
+            await message.channel.send(f"{gbanuser}を{server.name}からBANできませんでした。権限不足または何らかの例外が発生しました。")
 
   #GBANコマンド。指定ユーザーしか使えません。
 
