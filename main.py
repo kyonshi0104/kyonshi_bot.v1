@@ -272,7 +272,7 @@ async def on_message(message):
   if message.content.startswith("ky!debug_global.ban"):
     if message.author.id == 1189807997669609552:
       split_message = message.content.split(" ")
-      if len(split_message) > 1:
+      if len(split_message) > 2:
         await message.channel.send("ユーザーIDが指定されていません。")
         return
       if len(message.mentions) == 1:
