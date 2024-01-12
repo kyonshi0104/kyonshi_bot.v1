@@ -275,12 +275,8 @@ async def on_message(message):
   # 邪魔な元のメッセージは消しておく
   await message.delete()
 
-  for i in bot.webhooks.values():
-    # Webhookオブジェ作成
-    wh = discord.Webhook.from_url(i)
-
-    # メッセージに画像が添付されているか
-    if message.attachments:
+  # メッセージに画像が添付されているか
+  if message.attachments:
         await wh.send(
             content=message.content, # メッセージの内容
             username=message.author, # ユーザー名設定
@@ -288,7 +284,7 @@ async def on_message(message):
             files=[await i.to_file() for i in message.attachments], # 画像とか
             allowed_mentions=discord.AllowedMentions.none() # メンション無効化
         )
-    else:
+  else:
         await wh.send(
             content=message.content, # メッセージの内容
             username=message.author, # ユーザー名設定
@@ -319,7 +315,6 @@ async def on_message(message):
   if message.author.bot:
     return
   if message.content== 'ky!reroad':
-    global client
     await client.close()
     sys.exit()
 
