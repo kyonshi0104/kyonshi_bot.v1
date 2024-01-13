@@ -5,6 +5,7 @@ import time
 import datetime
 import discord
 import qrcode
+import requests
 from datetime import timedelta
 from discord import user
 from discord.ext import commands
@@ -65,17 +66,19 @@ class ModalName(discord.ui.Modal):
     getpoll.add_field(name="", value=f"\n{self.input.value}", inline=False)
     await interaction.response.edit_message(embed=getpoll)
 
-#普通のコマンドのテストだよ
-
-@bot.command()
-async def server_list(ctx):
-    # サーバーに参加している全てのサーバーの名前とIDを取得する
-    server_info = '\n'.join(f'{guild.name} ({guild.id})' for guild in bot.guilds)
-
-    # 名前とIDを一つのメッセージにまとめて表示する
-    await ctx.send(f'サーバー名とID:\n{server_info}')
-
 #/cmdだよ 自分でもよくわかってないよ
+
+@tree.command(name="redirect", description="指定したURLのリダイレクト先を調べて表示します。")
+async def redirectcommand(interaction: discord.Interaction, url: str):
+    try:
+      response = requests.get(url, allow_redirects=True)
+      embed = discord.Embed(title="結果", description="")
+      embed.add_field(name="元URL",value=f"```{url}```")
+      embed.add_field(name="リダイレクト先",value=f"```{response.url}```")
+      await interaction.response.send_message(embed=embed)
+    except Exception as e:
+      print(e)
+      await interaction.response.send_message("処理中にエラーが発生しました。")
 
 @tree.command(name="qrcode", description="qrcodeを作成します。")
 async def qrcodecommand(interaction: discord.Interaction, text: str):
@@ -520,7 +523,7 @@ class Client(discord.Client):
     self.tree = discord.CommandTree(client=self)
 
   async def setup_hook(self) -> None:
-    self.tree.add_command(qrcodecommand)
+    self.tree.add_command(redirectcommand)
     await self.tree.sync()
 
 
