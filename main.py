@@ -4,6 +4,7 @@ import random
 import time
 import datetime
 import discord
+import qrcode
 from datetime import timedelta
 from discord import user
 from discord.ext import commands
@@ -75,6 +76,19 @@ async def server_list(ctx):
     await ctx.send(f'サーバー名とID:\n{server_info}')
 
 #/cmdだよ 自分でもよくわかってないよ
+
+@tree.command(name="qrcode", description="qrcodeを作成します。")
+async def qrcode(interaction: discord.Interaction, text: str):
+      qr = qrcode.QRCode(version=1, box_size=10, border=5)
+      qr.add_data(text)
+      qr.make(fit=True)
+      img = qr.make_image(fill_color="black", back_color="white")
+      img.save("qrcode.png")
+      file = discord.File("qrcode.png", filename="image.png")
+      embed = discord.Embed(title="QRコード", description=text)
+      embed.set_image(url="attachment://image.png")
+      await interaction.response.send_message(file=file, embed=embed)
+
 
 @tree.command(name="timeout", description="指定したユーザーをタイムアウトします。(timeは分で指定します)")
 async def timeoutcmd(interaction: discord.Interaction, member: discord.Member, time: int, reason: str = ("理由は指定されていません")):
@@ -284,7 +298,7 @@ async def on_message(message):
         banned_users.append(banuser)
         for server in client.guilds:
           try:
-            await server.ban(user = gbanuser , reason = None , delete_message_days = 1)
+            await server.ban(user = gbanuser , reason = "開発者が危険なユーザーとしてglobal.banコマンドを実行しました。" , delete_message_days = 1)
             await message.channel.send(f"{gbanuser}を{server.name}からBANしました")
           except Exception as e:
             print(e)
@@ -506,7 +520,7 @@ class Client(discord.Client):
     self.tree = discord.CommandTree(client=self)
 
   async def setup_hook(self) -> None:
-    self.tree.add_command(timeoutcmd)
+    self.tree.add_command(qrcode)
     await self.tree.sync()
 
 
