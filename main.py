@@ -73,8 +73,8 @@ async def redirectcommand(interaction: discord.Interaction, url: str):
     try:
       response = requests.get(url, allow_redirects=True)
       embed = discord.Embed(title="結果", description="")
-      embed.add_field(name="元URL",value=f"```{url}```")
-      embed.add_field(name="リダイレクト先",value=f"```{response.url}```")
+      embed.add_field(name="元URL",value=f"```{url}```",inline=False)
+      embed.add_field(name="リダイレクト先",value=f"```{response.url}```",inline=False)
       await interaction.response.send_message(embed=embed)
     except Exception as e:
       print(e)
