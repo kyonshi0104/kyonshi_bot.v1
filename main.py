@@ -78,7 +78,7 @@ async def server_list(ctx):
 #/cmdだよ 自分でもよくわかってないよ
 
 @tree.command(name="qrcode", description="qrcodeを作成します。")
-async def qrcode(interaction: discord.Interaction, text: str):
+async def qrcodecommand(interaction: discord.Interaction, text: str):
       qr = qrcode.QRCode(version=1, box_size=10, border=5)
       qr.add_data(text)
       qr.make(fit=True)
@@ -520,8 +520,9 @@ class Client(discord.Client):
     self.tree = discord.CommandTree(client=self)
 
   async def setup_hook(self) -> None:
-    self.tree.add_command(qrcode)
+    self.tree.add_command(qrcodecommand)
     await self.tree.sync()
+
 
 
 #bot起動
