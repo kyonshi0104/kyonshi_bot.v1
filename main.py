@@ -85,7 +85,7 @@ async def qrcodecommand(interaction: discord.Interaction, text: str):
       img = qr.make_image(fill_color="black", back_color="white")
       img.save("qrcode.png")
       file = discord.File("qrcode.png", filename="image.png")
-      embed = discord.Embed(title="QRコード", description=text)
+      embed = discord.Embed(title="QRコード", description="```"+text+"```")
       embed.set_image(url="attachment://image.png")
       await interaction.response.send_message(file=file, embed=embed)
 
