@@ -47,6 +47,7 @@ owa = ['がこおわ', 'ふろおわ', '風呂おわ', 'めしおわ', '飯お�
 oti = ['風呂落ち', 'ふろおち', '飯落ち', 'めしおち', 'めし落ち', 'ふろ落ち']
 say = ["言わそうとしてきたぞ"]
 mentions = ["@everyone", "@here"]
+links = ["discord.gg", "discord.com/invite"]
 
 now = datetime.datetime.now(datetime.timezone(datetime.timedelta(hours=9)))
 
@@ -238,7 +239,8 @@ async def sey(interaction: discord.Interaction, text: str):
               color=discord.Color.orange())
           await channel.send(embed=say_bad_h)
       return 
-    if "discord.gg" in text:
+  for link in links:
+    if link in text:
        await interaction.response.send_message("招待リンクを検知しました。", ephemeral=True)
        saylog = {interaction.user.display_name}
        for channel in client.get_guild(1191687272035270666).channels:
