@@ -48,6 +48,7 @@ oti = ['風呂落ち', 'ふろおち', '飯落ち', 'めしおち', 'めし落�
 say = ["言わそうとしてきたぞ"]
 mentions = ["@everyone", "@here"]
 links = ["discord.gg", "discord.com/invite"]
+yamadas = ["やまだ","山田","ヤマダ"]
 
 now = datetime.datetime.now(datetime.timezone(datetime.timedelta(hours=9)))
 
@@ -255,6 +256,22 @@ async def sey(interaction: discord.Interaction, text: str):
             color=discord.Color.red())
            await channel.send(embed=say_bad_discord)
        return
+  for yamada in yamadas:
+    if yamada in text:
+       await interaction.response.send_message("私は山田じゃない")
+       saylog = {interaction.user.display_name}
+       for channel in client.get_guild(1191687272035270666).channels:
+         if channel.id == 1191691984889446421:
+           now = datetime.datetime.now(
+               datetime.timezone(datetime.timedelta(hours=9)))
+           say_bad_y = discord.Embed(
+             title='山田検出',
+             description=
+            (f"{now.hour}時{now.minute}分{now.second}秒に{saylog}が```{text}```を言わせようとして拒否したよ"
+             ),
+            color=discord.Color.yellow())
+           await channel.send(embed=say_bad_y)
+       return
   nomention = discord.AllowedMentions(roles=False)
   await interaction.response.send_message("送信しました", ephemeral=True)
   await interaction.channel.send(text, allowed_mentions=nomention)
@@ -294,6 +311,19 @@ async def on_ready():
 
   print('ログインしました')
 
+#山田じゃない
+
+@client.event
+async def on_member_update(before, after):
+  if before.nick != after.nick:
+      # ニックネームが変更された場合
+      if after.id == client.user.id:
+          # 自分のニックネームが変更された場合
+          if any(name in after.nick.lower() for name in yamadas):
+              await after.edit(nick='kyonshi_bot')
+              print(f'ニックネームが変更されました: {before.nick} -> {after.nick} (kyonshi_bot)')
+          else:
+              print(f'ニックネームが変更されましたが、yamadasリストに含まれていない名前です: {before.nick} -> {after.nick}')
 
 @client.event
 async def on_message(message):
@@ -545,6 +575,9 @@ async def on_message(message):
       return
     elif any(link in message.content for link in links):
       await message.channel.send("招待リンクを検知しました。 ")
+      return
+    elif any(yamada in message.content for yamada in yamadas):
+      await message.channel.send("山田じゃねぇよ")
       return
     response = response.replace("@", "＠")
     await message.channel.send(response)
