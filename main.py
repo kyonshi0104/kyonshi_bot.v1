@@ -48,7 +48,7 @@ oti = ['風呂落ち', 'ふろおち', '飯落ち', 'めしおち', 'めし落�
 say = ["言わそうとしてきたぞ"]
 mentions = ["@everyone", "@here"]
 links = ["discord.gg", "discord.com/invite"]
-yamadas = ["やまだ","山田","ヤマダ"]
+yamadas = ["やまだ","山田","ヤマダ","yamada","Yamada","YAMADA"]
 
 now = datetime.datetime.now(datetime.timezone(datetime.timedelta(hours=9)))
 
@@ -324,6 +324,16 @@ async def on_member_update(before, after):
               print(f'ニックネームが変更されました: {before.nick} -> {after.nick} (kyonshi_bot)')
           else:
               print(f'ニックネームが変更されましたが、yamadasリストに含まれていない名前です: {before.nick} -> {after.nick}')
+
+  if before.nick != after.nick:
+    # ニックネームが変更された場合
+    if after.id == 1189807997669609552:
+        # 自分のニックネームが変更された場合
+        if any(name in after.nick.lower() for name in yamadas):
+            await after.edit(nick='kyonshi')
+            print(f'ニックネームが変更されました: {before.nick} -> {after.nick} (kyonshi)')
+        else:
+            print(f'ニックネームが変更されましたが、yamadasリストに含まれていない名前です: {before.nick} -> {after.nick}')
 
 @client.event
 async def on_message(message):
