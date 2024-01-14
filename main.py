@@ -255,22 +255,22 @@ async def sey(interaction: discord.Interaction, text: str):
             color=discord.Color.red())
            await channel.send(embed=say_bad_discord)
        return
-    nomention = discord.AllowedMentions(roles=False)
-    await interaction.response.send_message("送信しました", ephemeral=True)
-    await interaction.channel.send(text, allowed_mentions=nomention)
-    saylog = {interaction.user.display_name}
-    for channel in client.get_guild(1191687272035270666).channels:
-      if channel.id == 1191691984889446421:
-        now = datetime.datetime.now(
-            datetime.timezone(datetime.timedelta(hours=9)))
-        say_ok = discord.Embed(
+  nomention = discord.AllowedMentions(roles=False)
+  await interaction.response.send_message("送信しました", ephemeral=True)
+  await interaction.channel.send(text, allowed_mentions=nomention)
+  saylog = {interaction.user.display_name}
+  for channel in client.get_guild(1191687272035270666).channels:
+    if channel.id == 1191691984889446421:
+      now = datetime.datetime.now(
+          datetime.timezone(datetime.timedelta(hours=9)))
+      say_ok = discord.Embed(
             title='発言',
             description=
             (f"{now.hour}時{now.minute}分{now.second}秒に{saylog}が```{text}```を言わせようとしたよ"
              ),
         color=discord.Color.blue())
-        await channel.send(embed=say_ok)
-    return
+      await channel.send(embed=say_ok)
+  return
 
 
 #起動時のデバッグだよ
