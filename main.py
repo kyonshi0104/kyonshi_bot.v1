@@ -298,7 +298,36 @@ async def on_ready():
 @client.event
 async def on_message(message):
 
-  #ky!cmd
+  #ky!admincmd
+
+  if message.content.split(' ')[0] == f'ky!debug_linkget':
+    if message.author.id == 1189807997669609552:
+      guild = client.get_guild(int(message.content.split(' ')[1]))
+      text = guild.text_channels
+      if text:
+        text_id = text[0].id
+        channel = client.get_channel(text_id)
+        invite = await channel.create_invite(max_uses=1,unique=False)
+        await message.channel.send(f"作成しました。\n{invite.url}")
+      else:
+        await message.channel.send(f'見つかりませんでした。')
+
+
+  if message.author.bot:
+    return
+  if message.content == "ky!debug_server":
+    if message.author.id != 1189807997669609552:
+      await message.channel.send("そのコマンドを実行する権限がありません。")
+      return
+    if message.author.id == 1189807997669609552:
+     guildlist = client.guilds
+     server_info = ""
+     serveritiran = discord.Embed(title="kyonshi_bot参加サーバー一覧",description="参加サーバーの一覧を表示します\n",color=discord.Color.blue())
+     for server in guildlist:
+         server_info += f" {server.name}, : {server.id}\n"
+         serveritiran.description = server_info
+     await message.channel.send(embed=serveritiran)
+
 
   if message.author.bot:
     return
@@ -323,13 +352,14 @@ async def on_message(message):
             print(e)
             await message.channel.send(f"{gbanuser}を{server.name}からBANできませんでした。権限不足または何らかの例外が発生しました。")
 
-  #GBANコマンド。指定ユーザーしか使えません。
-
   if message.author.bot:
     return
-  if message.content== 'ky!reroad':
-    await client.close()
-    sys.exit()
+  if message.author.id ==1189807997669609552:
+    if message.content== 'ky!reroad':
+      await client.close()
+      sys.exit()
+
+  #ky!globalcommand
 
   if message.author.bot:
     return
