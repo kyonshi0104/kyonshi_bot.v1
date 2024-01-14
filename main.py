@@ -237,23 +237,38 @@ async def sey(interaction: discord.Interaction, text: str):
                ),
               color=discord.Color.orange())
           await channel.send(embed=say_bad_h)
-      return
-  else:
-    nomention = discord.AllowedMentions(roles=False)
-    await interaction.response.send_message("送信しました", ephemeral=True)
-    await interaction.channel.send(text, allowed_mentions=nomention)
-    saylog = {interaction.user.display_name}
-    for channel in client.get_guild(1191687272035270666).channels:
-      if channel.id == 1191691984889446421:
-        now = datetime.datetime.now(
-            datetime.timezone(datetime.timedelta(hours=9)))
-        say_ok = discord.Embed(
+      return 
+    if "discord.gg" in text:
+       await interaction.response.send_message("招待リンクを検知しました。", ephemeral=True)
+       saylog = {interaction.user.display_name}
+       for channel in client.get_guild(1191687272035270666).channels:
+         if channel.id == 1191691984889446421:
+           now = datetime.datetime.now(
+               datetime.timezone(datetime.timedelta(hours=9)))
+           say_bad_discord = discord.Embed(
+             title='serverlink検出',
+             description=
+            (f"{now.hour}時{now.minute}分{now.second}秒に{saylog}が{text}を言わせようとして拒否したよ"
+             ),
+            color=discord.Color.red())
+           await channel.send(embed=say_bad_discord)
+       return
+    else:
+        nomention = discord.AllowedMentions(roles=False)
+        await interaction.response.send_message("送信しました", ephemeral=True)
+        await interaction.channel.send(text, allowed_mentions=nomention)
+        saylog = {interaction.user.display_name}
+        for channel in client.get_guild(1191687272035270666).channels:
+          if channel.id == 1191691984889446421:
+           now = datetime.datetime.now(
+               datetime.timezone(datetime.timedelta(hours=9)))
+           say_ok = discord.Embed(
             title='発言',
             description=
             (f"{now.hour}時{now.minute}分{now.second}秒に{saylog}が{text}を言わせようとしたよ"
              ),
             color=discord.Color.blue())
-        await channel.send(embed=say_ok)
+           await channel.send(embed=say_ok)
     return
 
 
