@@ -543,6 +543,9 @@ async def on_message(message):
     elif any(mention in message.content for mention in mentions):
       await message.channel.send("everyoneメンションまたはhereメンションを検知しました。 ")
       return
+    elif any(link in message.content for link in links):
+      await message.channel.send("招待リンクを検知しました。 ")
+      return
     response = response.replace("@", "＠")
     await message.channel.send(response)
 
