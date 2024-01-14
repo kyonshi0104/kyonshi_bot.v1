@@ -182,7 +182,7 @@ async def sey(interaction: discord.Interaction, text: str):
         say_bad_m = discord.Embed(
             title='濡れ衣検出',
             description=
-            (f"{now.hour}時{now.minute}分{now.second}秒に{saylog}が{text}を言わせようとして拒否したよ"
+            (f"{now.hour}時{now.minute}分{now.second}秒に{saylog}が```{text}```を言わせようとして拒否したよ"
              ),
             color=discord.Color.purple())
         await channel.send(embed=say_bad_m)
@@ -216,7 +216,7 @@ async def sey(interaction: discord.Interaction, text: str):
           say_bad_g = discord.Embed(
               title='NGmention検出',
               description=
-              (f"{now.hour}時{now.minute}分{now.second}秒に{saylog}が{text}を言わせようとして拒否したよ"
+              (f"{now.hour}時{now.minute}分{now.second}秒に{saylog}が```{text}```を言わせようとして拒否したよ"
                ),
               color=discord.Color.red())
           await channel.send(embed=say_bad_g)
@@ -234,7 +234,7 @@ async def sey(interaction: discord.Interaction, text: str):
           say_bad_h = discord.Embed(
               title='卑猥ワード検出',
               description=
-              (f"{now.hour}時{now.minute}分{now.second}秒に{saylog}が{text}を言わせようとして拒否したよ"
+              (f"{now.hour}時{now.minute}分{now.second}秒に{saylog}が```{text}```を言わせようとして拒否したよ"
                ),
               color=discord.Color.orange())
           await channel.send(embed=say_bad_h)
@@ -250,27 +250,26 @@ async def sey(interaction: discord.Interaction, text: str):
            say_bad_discord = discord.Embed(
              title='serverlink検出',
              description=
-            (f"{now.hour}時{now.minute}分{now.second}秒に{saylog}が{text}を言わせようとして拒否したよ"
+            (f"{now.hour}時{now.minute}分{now.second}秒に{saylog}が```{text}```を言わせようとして拒否したよ"
              ),
             color=discord.Color.red())
            await channel.send(embed=say_bad_discord)
        return
-    else:
-        nomention = discord.AllowedMentions(roles=False)
-        await interaction.response.send_message("送信しました", ephemeral=True)
-        await interaction.channel.send(text, allowed_mentions=nomention)
-        saylog = {interaction.user.display_name}
-        for channel in client.get_guild(1191687272035270666).channels:
-          if channel.id == 1191691984889446421:
-           now = datetime.datetime.now(
-               datetime.timezone(datetime.timedelta(hours=9)))
-           say_ok = discord.Embed(
+    nomention = discord.AllowedMentions(roles=False)
+    await interaction.response.send_message("送信しました", ephemeral=True)
+    await interaction.channel.send(text, allowed_mentions=nomention)
+    saylog = {interaction.user.display_name}
+    for channel in client.get_guild(1191687272035270666).channels:
+      if channel.id == 1191691984889446421:
+        now = datetime.datetime.now(
+            datetime.timezone(datetime.timedelta(hours=9)))
+        say_ok = discord.Embed(
             title='発言',
             description=
-            (f"{now.hour}時{now.minute}分{now.second}秒に{saylog}が{text}を言わせようとしたよ"
+            (f"{now.hour}時{now.minute}分{now.second}秒に{saylog}が```{text}```を言わせようとしたよ"
              ),
-            color=discord.Color.blue())
-           await channel.send(embed=say_ok)
+        color=discord.Color.blue())
+        await channel.send(embed=say_ok)
     return
 
 
