@@ -6,6 +6,9 @@ import datetime
 import discord
 import qrcode
 import requests
+import logging
+import json
+import urllib.request
 from datetime import timedelta
 from discord import user
 from discord.ext import commands
@@ -14,9 +17,11 @@ from dotenv import load_dotenv
 
 client = discord.Client(intents=discord.Intents.all())
 
-bot = commands.Bot(command_prefix="ky!", intents=discord.Intents.all())
+async def log(content):
+  print(content)
+  await discord.Webhook.from_url(os.environ['DISCORD_WEBHOOK'], client=client).send(content)
 
-bot.webhooks = {} 
+bot = commands.Bot(command_prefix="ky!", intents=discord.Intents.all())
 
 tree = app_commands.CommandTree(client)
 
@@ -643,11 +648,33 @@ class Client(discord.Client):
     self.tree.add_command(kickcmd)
     await self.tree.sync()
 
+class DiscordWebHookHandler(logging.Handler):
+  webhook:str
+  console:logging.StreamHandler
+  def __init__(self):
+    self.webhook = os.environ['DISCORD_WEBHOOK']
+    self.console = logging.StreamHandler()
+    super().__init__()
+
+  def emit(self, record):
+    try:
+      self.console.emit(record)
+      urllib.request.urlopen(urllib.request.Request(
+        self.webhook,
+        data=json.dumps({
+          "content": "```js\n"+self.format(record)+"\n```"
+        }).encode(),
+        headers={
+          "Content-Type": "application/json",
+          "User-Agent": "DiscordBot (private use) Python-urllib/3.10",
+        },
+      )).close()
+    except Exception:
+      self.handleError(record)
 
 
 #bot起動
 
 my_secret = os.environ['TOKEN']
 def run():
- client.run(my_secret)
-print("OK")
+  client.run(my_secret, log_handler=DiscordWebHookHandler())
