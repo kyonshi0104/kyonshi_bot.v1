@@ -96,22 +96,62 @@ async def qrcodecommand(interaction: discord.Interaction, text: str):
 
 
 @tree.command(name="timeout", description="指定したユーザーをタイムアウトします。(timeは分で指定します)")
-async def timeoutcmd(interaction: discord.Interaction, member: discord.Member, time: int, reason: str = ("理由は指定されていません")):
+async def timeoutcmd(interaction: discord.Interaction, member: discord.Member, time: int, reason: str = (f"理由は指定されていません。")):
       duration = datetime.timedelta(minutes=time)
       if interaction.user == member:
-          await interaction.response.send_message("自分自身をタイムアウトすることはできません。")
+          await interaction.response.send_message("❌自分自身をタイムアウトすることはできません。")
           return
       elif member.guild_permissions.administrator:
-          await interaction.response.send_message("管理者をタイムアウトすることはできません。")
+          await interaction.response.send_message("❌管理者をタイムアウトすることはできません。")
           return
       elif member.id == 1190912307790872637:
-          await interaction.response.send_message("このbotをタイムアウトすることはできません。")
+          await interaction.response.send_message("❌このbotをタイムアウトすることはできません。")
           return
       elif interaction.user.guild_permissions.moderate_members:
           await member.timeout(duration,reason=reason)
           await interaction.response.send_message(f"✅{member.mention} をタイムアウトしました！")
       else:
-          await interaction.response.send_message(f"{interaction.user.mention}はタイムアウト権限を持っていません。")
+          await interaction.response.send_message(f"❌{interaction.user.mention}はタイムアウト権限を持っていません。")
+
+@tree.command(name="kick", description="指定したユーザーをキックします。")
+async def kickcmd(interaction: discord.Interaction, member: discord.Member, reason: str = ("理由は指定されていません")):
+      if interaction.user == member:
+          await interaction.response.send_message("❌自分自身をキックすることはできません。")
+          return
+      elif member.guild_permissions.administrator:
+          await interaction.response.send_message("❌管理者をキックすることはできません。")
+          return
+      elif member.id == 1190912307790872637:
+          await interaction.response.send_message(f"❌このbotをキックすることはできません。")
+      elif interaction.user.guild_permissions.kick_members:
+          await member.kick(reason=reason)
+          await interaction.response.send_message(f"✅{member.mention} をキックしました！")
+      else:
+          await interaction.response.send_message(f"❌{interaction.user.mention}はその権限を持っていません。")
+
+@tree.command(name="ban", description="指定したユーザーをBANします。")
+async def bancmd(interaction: discord.Interaction, member: discord.Member, reason: str = ("理由は指定されていません")):
+      if interaction.user == member:
+        await interaction.response.send_message("❌自分自身をBANすることはできません。")
+        return
+      elif member.guild_permissions.administrator:
+        await interaction.response.send_message("❌管理者をBANすることはできません。")
+        return
+      elif member.id == 1190912307790872637:
+        await interaction.response.send_message("❌このbotをBANすることはできません。")
+      elif interaction.user.guild_permissions.ban_members:
+        await member.ban(reason=reason)
+        await interaction.response.send_message(f"✅{member.mention} をBANしました！")
+      else:
+        await interaction.response.send_message(f"❌{interaction.user.mention}はその権限を持っていません。")
+
+@tree.command(name="unban", description="指定したユーザーのBANを解除します。")
+async def unbancomd(interaction: discord.Interaction, member: discord.Member, reason: str = ("理由は指定されていません")):
+      if interaction.user.guild_permissions.ban_members:
+        await interaction.guild.unban(member, reason=reason)
+        await interaction.response.send_message(f"✅{member.mention} のBANを解除しました。")
+      else:
+        await interaction.response.send_message(f"❌{interaction.user.mention}はその権限を持っていません。")
 
 @tree.command(name="wpoll", description="調整中")
 async def poll(interaction: discord.Interaction, title: str):
@@ -600,7 +640,7 @@ class Client(discord.Client):
     self.tree = discord.CommandTree(client=self)
 
   async def setup_hook(self) -> None:
-    self.tree.add_command(redirectcommand)
+    self.tree.add_command(kickcmd)
     await self.tree.sync()
 
 
