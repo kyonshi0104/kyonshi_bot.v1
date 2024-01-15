@@ -420,21 +420,6 @@ async def on_message(message):
 
   if message.author.bot:
     return
-  if message.content == "ky!debug_server":
-    if message.author.id != 1189807997669609552:
-      await message.channel.send("そのコマンドを実行する権限がありません。")
-      return
-    if message.author.id == 1189807997669609552:
-     guildlist = client.guilds
-     server_info = ""
-     serveritiran = discord.Embed(title="kyonshi_bot参加サーバー一覧",description="参加サーバーの一覧を表示します\n",color=discord.Color.blue())
-     for server in guildlist:
-         server_info += f" {server.name}, : {server.id}\n"
-         serveritiran.description = server_info
-     await message.channel.send(embed=serveritiran)
-
-  if message.author.bot:
-    return
   if message.content == 'ky!invite':
     await message.reply(
         '[botのリンクだよ](<https://discord.com/oauth2/authorize?client_id=1190912307790872637&permissions=67061618699863&scope=bot>)'
@@ -604,7 +589,7 @@ async def on_guild_join(guild):
 async def on_guild_channel_create(channel):
    if channel.name == GLOBALCHAT:
       webhook = await channel.create_webhook(name="globalchat")
-      bot.webhooks[channel.guild.id] = webhook.url
+      client.webhooks[channel.guild.id] = webhook.url
       return
 
 
@@ -625,4 +610,4 @@ class Client(discord.Client):
 my_secret = os.environ['TOKEN']
 def run():
  client.run(my_secret)
-print("行けたね")
+print("OK")
