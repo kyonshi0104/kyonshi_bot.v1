@@ -451,6 +451,8 @@ async def on_message(message):
     return
   if message.author.id == client.user.id:
     return
+  if not message.channel.name == GLOBALCHAT:
+    return
   text = (f"```{message.content}```")
   embed = discord.Embed(description=text)
   embed.set_author(name=message.author, icon_url=message.author.avatar)
