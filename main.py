@@ -461,9 +461,9 @@ async def on_message(message):
   for channel in client.get_all_channels():
     if channel.name == GLOBALCHAT:
         if channel.id == message.channel.id:
-            continue
+            await message.delete()
+          
         await channel.send(embed=embed)
-        await message.delete()
 
   if message.author.bot:
     return
