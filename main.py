@@ -4,6 +4,7 @@ import random
 import time
 import datetime
 import discord
+from discord.flags import MessageFlags
 import qrcode
 import requests
 import logging
@@ -40,7 +41,7 @@ class DeleteButton(discord.ui.Button):
 #words一覧
 banned_users = []
 
-GLOBALCHAT = ("ky-gc")
+GLOBALCHAT = ("kyonshi-gc")
 
 ngwords = ['010509']
 kitanaiwords = ['010409']
@@ -448,6 +449,28 @@ async def on_message(message):
 
   if message.author.bot:
     return
+  if message.author.id == client.user.id:
+    return
+  text = (f"```{message.content}```")
+  embed = discord.Embed(description=text)
+    # 埋め込みに送信者のアイコン設定
+  embed.set_author(name=message.author, icon_url=message.author.avatar)
+
+  # メッセージに画像が添付されている場合は設定
+  if message.attachments:
+      embed.set_image(url=message.attachments[0].url)
+
+  for channel in client.get_all_channels():
+    if channel.name == GLOBALCHAT:
+        if channel.id == message.channel.id:
+            continue
+
+        # メッセージ送信
+        await message.channel.send(embed=embed)
+        await message.delete()
+
+  if message.author.bot:
+    return
   if message.content.startswith("ky!check_permissions"):
     if len(message.mentions) != 1:
       await message.reply("ユーザーを指定してください。")
@@ -671,7 +694,6 @@ class DiscordWebHookHandler(logging.Handler):
       )).close()
     except Exception:
       self.handleError(record)
-
 
 #bot起動
 
