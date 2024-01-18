@@ -453,10 +453,8 @@ async def on_message(message):
     return
   text = (f"```{message.content}```")
   embed = discord.Embed(description=text)
-    # 埋め込みに送信者のアイコン設定
   embed.set_author(name=message.author, icon_url=message.author.avatar)
 
-  # メッセージに画像が添付されている場合は設定
   if message.attachments:
       embed.set_image(url=message.attachments[0].url)
 
@@ -464,9 +462,7 @@ async def on_message(message):
     if channel.name == GLOBALCHAT:
         if channel.id == message.channel.id:
             continue
-
-        # メッセージ送信
-        await message.channel.send(embed=embed)
+        await channel.send(embed=embed)
         await message.delete()
 
   if message.author.bot:
