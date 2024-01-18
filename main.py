@@ -645,22 +645,6 @@ async def on_message(message):
     response = response.replace("@", "＠")
     await message.channel.send(response)
 
-@client.event
-async def on_guild_join(guild):
-  for channel in guild.channels:
-    if channel.name == GLOBALCHAT:
-      webhook = await channel.create_webhook(name="globalchat")
-      bot.webhooks[guild.id] = webhook.url
-      return
-
-@client.event
-async def on_guild_channel_create(channel):
-   if channel.name == GLOBALCHAT:
-      webhook = await channel.create_webhook(name="globalchat")
-      client.webhooks[channel.guild.id] = webhook.url
-      return
-
-
 class Client(discord.Client):
 
   def __init__(self):
