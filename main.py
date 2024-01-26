@@ -342,7 +342,7 @@ async def sey(interaction: discord.Interaction, text: str):
 @client.event
 async def on_ready():
   await client.change_presence(status=discord.Status.online,
-                               activity=discord.Game(f"test"))
+                               activity=discord.Game(f""))
 
   for channel in client.get_guild(1191687272035270666).channels:
     if channel.id == 1191687272903475302:
