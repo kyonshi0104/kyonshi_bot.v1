@@ -442,6 +442,7 @@ async def on_message(message):
     return
   if message.author.id ==1189807997669609552:
     if message.content== 'ky!reroad':
+      await message.channel.send("再起します")
       await client.close()
       sys.exit()
 
