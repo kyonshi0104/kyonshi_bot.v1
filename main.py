@@ -450,26 +450,6 @@ async def on_message(message):
 
   if message.author.bot:
     return
-  if message.author.id == client.user.id:
-    return
-  if not message.channel.name == GLOBALCHAT:
-    return
-  text = (f"```{message.content}```")
-  embed = discord.Embed(description=text)
-  embed.set_author(name=message.author, icon_url=message.author.avatar)
-
-  if message.attachments:
-      embed.set_image(url=message.attachments[0].url)
-
-  for channel in client.get_all_channels():
-    if channel.name == GLOBALCHAT:
-        if channel.id == message.channel.id:
-            await message.delete()
-          
-        await channel.send(embed=embed)
-
-  if message.author.bot:
-    return
   if message.content.startswith("ky!check_permissions"):
     if len(message.mentions) != 1:
       await message.reply("ユーザーを指定してください。")
@@ -643,6 +623,27 @@ async def on_message(message):
       return
     response = response.replace("@", "＠")
     await message.channel.send(response)
+
+
+  if message.author.bot:
+    return
+  if message.author.id == client.user.id:
+    return
+  if not message.channel.name == GLOBALCHAT:
+    return
+  text = (f"```{message.content}```")
+  embed = discord.Embed(description=text)
+  embed.set_author(name=message.author, icon_url=message.author.avatar)
+
+  if message.attachments:
+      embed.set_image(url=message.attachments[0].url)
+
+  for channel in client.get_all_channels():
+    if channel.name == GLOBALCHAT:
+        if channel.id == message.channel.id:
+            await message.delete()
+
+        await channel.send(embed=embed)
 
 class Client(discord.Client):
 
