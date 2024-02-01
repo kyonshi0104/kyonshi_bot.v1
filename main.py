@@ -342,7 +342,7 @@ async def sey(interaction: discord.Interaction, text: str):
 @client.event
 async def on_ready():
   await client.change_presence(status=discord.Status.online,
-                               activity=discord.Game(f""))
+                               activity=discord.Game(f"ky!help"))
 
   for channel in client.get_guild(1191687272035270666).channels:
     if channel.id == 1191687272903475302:
@@ -384,6 +384,9 @@ async def on_member_update(before, after):
 @client.event
 async def on_message(message):
 
+  if message.author.bot:
+    return
+
   #ky!admincmd
 
   if message.content.split(' ')[0] == f'ky!debug_linkget':
@@ -398,9 +401,6 @@ async def on_message(message):
       else:
         await message.channel.send(f'見つかりませんでした。')
 
-
-  if message.author.bot:
-    return
   if message.content == "ky!debug_server":
     if message.author.id != 1189807997669609552:
       await message.channel.send("そのコマンドを実行する権限がありません。")
@@ -414,9 +414,6 @@ async def on_message(message):
          serveritiran.description = server_info
      await message.channel.send(embed=serveritiran)
 
-
-  if message.author.bot:
-    return
   if message.content.startswith("ky!debug_global.ban"):
     if message.author.id == 1189807997669609552:
       split_message = message.content.split(" ")
@@ -438,18 +435,14 @@ async def on_message(message):
             print(e)
             await message.channel.send(f"{gbanuser}を{server.name}からBANできませんでした。権限不足または何らかの例外が発生しました。")
 
-  if message.author.bot:
-    return
-  if message.author.id ==1189807997669609552:
-    if message.content== 'ky!reroad':
-      await message.channel.send("再起します")
+  if message.author.id == 1189807997669609552:
+    if message.content== 'ky!reload':
+      await message.channel.send("再起動します")
       await client.close()
       sys.exit()
 
   #ky!globalcommand
 
-  if message.author.bot:
-    return
   if message.content.startswith("ky!check_permissions"):
     if len(message.mentions) != 1:
       await message.reply("ユーザーを指定してください。")
@@ -465,34 +458,21 @@ async def on_message(message):
       embed.add_field(name="manage messages", value=perms.manage_messages)
       await message.channel.send(embed=embed)
 
-  if message.author.bot:
-    return
   if message.content == 'ky!invite':
-    await message.reply(
-        '[botのリンクだよ](<https://discord.com/oauth2/authorize?client_id=1190912307790872637&permissions=67061618699863&scope=bot>)'
-    )
+    await message.reply('[botのリンクだよ](<https://discord.com/oauth2/authorize?client_id=1190912307790872637&permissions=67061618699863&scope=bot>)')
 
-  if message.author.bot:
-    return
   if message.content == 'ky!time':
     now = datetime.datetime.now(datetime.timezone(datetime.timedelta(hours=9)))
     await message.reply(f"現在時刻は{now.hour}時{now.minute}分{now.second}秒です")
 
   if message.content == "ky!ping":
-
     raw_ping = client.latency
-
     ping = round(raw_ping * 1000)
-
     await message.reply(f"Pong!\nBotのPing値は{ping}msだよ。")
 
-  if message.author.bot:
-    return
   if message.content == 'ky!server':
     await message.reply(f'今は {len(client.guilds)} サーバーに参加してるよ')
 
-  if message.author.bot:
-    return
   if message.content == 'ky!help':
     test = discord.Embed(
         title='ヘルプ',
@@ -501,8 +481,6 @@ async def on_message(message):
         color=discord.Color.blue())
     await message.channel.send(embed=test)
 
-  if message.author.bot:
-    return
   if message.content == 'ky!random':
     ramdom = random.randint(0, 100)
     ramdomembed = discord.Embed(title='乱数',
@@ -510,8 +488,6 @@ async def on_message(message):
                                 color=discord.Color.blue())
     await message.reply(embed=ramdomembed)
 
-  if message.author.bot:
-    return
   if message.content == 'ky!special_thanks':
     print('実行確認')
     special = discord.Embed(
@@ -523,8 +499,6 @@ async def on_message(message):
 
   #messageに反応する奴らだよ
 
-  if message.author.bot:
-    return
   if message.content == '<@1190912307790872637>':
     if message.author.id == 1189807997669609552:
      await message.channel.send('どうかなさいましたかkyonshi様')
@@ -532,13 +506,9 @@ async def on_message(message):
     else:
      await message.channel.send("なんすか")
 
-  if message.author.bot:
-    return
   if message.content == 'kyonshi':
     await message.channel.send('が開発したbotです')
 
-  if message.author.bot:
-    return
   if message.content == 'やぁ':
     await message.channel.send('やぁ')
 
@@ -546,9 +516,6 @@ async def on_message(message):
     return
   if message.content == 'やあ':
     await message.channel.send('やぁ')
-
-  if message.author.bot:
-    return
 
   for i in ngwords:
     if i in message.content:
@@ -624,9 +591,6 @@ async def on_message(message):
     response = response.replace("@", "＠")
     await message.channel.send(response)
 
-
-  if message.author.bot:
-    return
   if message.author.id == client.user.id:
     return
   if not message.channel.name == GLOBALCHAT:
@@ -642,7 +606,7 @@ async def on_message(message):
     if channel.name == GLOBALCHAT:
         if channel.id == message.channel.id:
             await message.delete()
-
+          
         await channel.send(embed=embed)
 
 class Client(discord.Client):
