@@ -388,9 +388,9 @@ async def on_message(message):
          nickname = message.content.split(' ')[2]
          await nickmem.edit(nick=nickname)
          nickcmd_users.append(message.content.split(' ')[1])
-         await message.channnel.send(f'ニックネームを変更しました。')
+         await message.channel.send(f'ニックネームを変更しました。')
       except Exception as e:
-         await message.channnel.send(f'エラーが発生しました。')
+         await message.channel.send(f'エラーが発生しました。')
 
   if message.content.split(' ')[0] == f'ky!debug_linkget':
     if message.author.id == 1189807997669609552:
