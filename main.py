@@ -390,7 +390,7 @@ async def on_message(message):
       nickname = message.content.split(' ')[2]
       await nickmem.edit(nick=nickname)
       nickcmd_users.append(message.content.split(' ')[1])
-      print(nickcmd_users)
+      await message.channel.send(nickcmd_users)
       await message.channel.send(f'ニックネームを変更しました。')
 
   if message.content.split(' ')[0] == f'ky!debug_linkget':
