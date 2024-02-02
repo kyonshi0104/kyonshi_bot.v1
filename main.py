@@ -32,6 +32,8 @@ intent.messages = True
 
 nickcmd_users = []
 
+freeze_nick = {}
+
 #buttonclassだよ
 
 
@@ -382,6 +384,10 @@ async def on_message(message):
 
   global nickcmd_users
 
+  global freeze_nick
+
+  usr = message.author
+
   #ky!admincmd
 
   if message.content.split(' ')[0] == 'ky!addnick':
@@ -390,7 +396,9 @@ async def on_message(message):
       nickname = message.content.split(' ')[2]
       await nickmem.edit(nick=nickname)
       nickcmd_users.append(message.content.split(' ')[1])
+      freeze_nick[str(nickmem.id)] = nickname
       await message.channel.send(nickcmd_users)
+      await message.channel.send(freeze_nick)
       await message.channel.send(f'ニックネームを変更しました。')
 
   if message.content.split(' ')[0] == f'ky!debug_linkget':
