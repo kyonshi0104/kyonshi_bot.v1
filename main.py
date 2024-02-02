@@ -373,8 +373,10 @@ async def on_member_update(before, after):
           if any(name in after.nick.lower() for name in yamadas):
               await after.edit(nick='kyonshi_bot')
 
-  if before.id in nickcmd_users and before.nick != after.nick:
-      await after.edit(nick=before.nick)
+  if str(before.id) in freeze_nick:
+    if before.nick != after.nick:
+      await after.edit(nick=freeze_nick[str(after.id)])
+      
 
 @client.event
 async def on_message(message):
