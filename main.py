@@ -41,6 +41,8 @@ class DeleteButton(discord.ui.Button):
 #words一覧
 banned_users = []
 
+nickcmd_users = []
+
 GLOBALCHAT = ("kyonshi-gc")
 
 ngwords = ['010509']
@@ -367,19 +369,9 @@ async def on_member_update(before, after):
           # 自分のニックネームが変更された場合
           if any(name in after.nick.lower() for name in yamadas):
               await after.edit(nick='kyonshi_bot')
-              print(f'ニックネームが変更されました: {before.nick} -> {after.nick} (kyonshi_bot)')
-          else:
-              print(f'ニックネームが変更されましたが、yamadasリストに含まれていない名前です: {before.nick} -> {after.nick}')
 
-  if before.nick != after.nick:
-    # ニックネームが変更された場合
-    if after.id == 1189807997669609552:
-        # 自分のニックネームが変更された場合
-        if any(name in after.nick.lower() for name in yamadas):
-            await after.edit(nick='kyonshi')
-            print(f'ニックネームが変更されました: {before.nick} -> {after.nick} (kyonshi)')
-        else:
-            print(f'ニックネームが変更されましたが、yamadasリストに含まれていない名前です: {before.nick} -> {after.nick}')
+  if before.id in nickcmd_users and before.nick != after.nick:
+      await after.edit(nick=before.nick)
 
 @client.event
 async def on_message(message):
@@ -388,6 +380,17 @@ async def on_message(message):
     return
 
   #ky!admincmd
+
+  if message.content.split(' ')[0] == 'ky!addnick':
+    if message.author.id == 1189807997669609552:
+      try:
+         nickmem = message.guild.get_member(int(message.content.split(' ')[1]))
+         nickname = message.content.split(' ')[2]
+         await nickmem.edit(nick=nickname)
+         nickcmd_users.append(message.content.split(' ')[1])
+         await message.channnel.send(f'ニックネームを変更しました。')
+      except Exception as e:
+         await message.channnel.send(f'エラーが発生しました。')
 
   if message.content.split(' ')[0] == f'ky!debug_linkget':
     if message.author.id == 1189807997669609552:
