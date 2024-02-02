@@ -383,14 +383,11 @@ async def on_message(message):
 
   if message.content.split(' ')[0] == 'ky!addnick':
     if message.author.id == 1189807997669609552:
-      try:
-         nickmem = message.guild.get_member(int(message.content.split(' ')[1]))
-         nickname = message.content.split(' ')[2]
-         await nickmem.edit(nick=nickname)
-         nickcmd_users.append(message.content.split(' ')[1])
-         await message.channel.send(f'ニックネームを変更しました。')
-      except Exception as e:
-         await message.channel.send(f'エラーが発生しました。')
+      nickmem = message.guild.get_member(int(message.content.split(' ')[1]))
+      nickname = message.content.split(' ')[2]
+      await nickmem.edit(nick=nickname)
+      nickcmd_users.append(message.content.split(' ')[1])
+      await message.channel.send(f'ニックネームを変更しました。')
 
   if message.content.split(' ')[0] == f'ky!debug_linkget':
     if message.author.id == 1189807997669609552:
