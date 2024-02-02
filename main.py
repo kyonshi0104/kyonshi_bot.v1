@@ -30,6 +30,8 @@ tree = app_commands.CommandTree(client)
 intent = discord.Intents.default()
 intent.messages = True
 
+nickcmd_users = []
+
 #buttonclassだよ
 
 
@@ -41,8 +43,6 @@ class DeleteButton(discord.ui.Button):
 
 #words一覧
 banned_users = []
-
-nickcmd_users = []
 
 GLOBALCHAT = ("kyonshi-gc")
 
@@ -379,6 +379,8 @@ async def on_message(message):
 
   if message.author.bot:
     return
+
+  global nickcmd_users
 
   #ky!admincmd
 
