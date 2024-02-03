@@ -105,7 +105,6 @@ async def qrcodecommand(interaction: discord.Interaction, text: str):
       embed.set_image(url="attachment://image.png")
       await interaction.response.send_message(file=file, embed=embed)
 
-
 @tree.command(name="timeout", description="指定したユーザーをタイムアウトします。(timeは分で指定します)")
 async def timeoutcmd(interaction: discord.Interaction, member: discord.Member, time: int, reason: str = (f"理由は指定されていません。")):
       duration = datetime.timedelta(minutes=time)
@@ -396,12 +395,13 @@ async def on_message(message):
     if message.author.id == 1189807997669609552:
       nickmem = message.guild.get_member(int(message.content.split(' ')[1]))
       nickname = message.content.split(' ')[2]
-      await nickmem.edit(nick=nickname)
-      nickcmd_users.append(message.content.split(' ')[1])
-      freeze_nick[str(nickmem.id)] = nickname
-      await message.channel.send(nickcmd_users)
-      await message.channel.send(freeze_nick)
-      await message.channel.send(f'ニックネームを変更しました。')
+      try:
+        await nickmem.edit(nick=nickname)
+        nickcmd_users.append(message.content.split(' ')[1])
+        freeze_nick[str(nickmem.id)] = nickname
+        await message.channel.send(f'ニックネームを変更しました。')
+      except Exception as e:
+        await message.channel.send("権限不足もしくは何らかの例外が発生しました。")
 
   if message.content.split(' ')[0] == f'ky!debug_linkget':
     if message.author.id == 1189807997669609552:
