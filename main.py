@@ -408,7 +408,8 @@ async def on_message(message):
     if usr.id in Developers:
       devs = ("")
       for dev in Developers:
-        devs += (f"{dev}\n")
+        devuser = await client.fetch_user(dev)
+        devs += (f"{devuser}\n")
       else:
         devem = discord.Embed(title="開発者一覧", description=devs, color=discord.Color.blue())
         await message.channel.send(embed=devem)
@@ -418,7 +419,10 @@ async def on_message(message):
 
   if message.content.startswith('ky!developer-'):
     if usr.id == 1189807997669609552:
-      if int(message.content.split(' ')[1]) in Developers:
+      if not message.content.split(' ')[1].isdecimal:
+        await message.channel.send('IDが正しくありません。')
+        return
+      elif int(message.content.split(' ')[1]) in Developers:
         Developers.remove(int(message.content.split(' ')[1]))
         removedev = await client.fetch_user(int(message.content.split(' ')[1]))
         await message.channel.send(f'{removedev.name}を開発者一覧から削除しました。')
@@ -430,9 +434,17 @@ async def on_message(message):
 
   if message.content.startswith('ky!developer+'):
     if usr.id == 1189807997669609552:
-      Developers.append(int(message.content.split(' ')[1]))
-      dev = await client.fetch_user(int(message.content.split(' ')[1]))
-      await message.channel.send(f'{dev.name}を開発者としてマークしました。')
+      if not message.content.split(' ')[1].isdecimal:
+        await message.channel.send('IDが正しくありません。')
+        return
+      else:
+        dev = await client.fetch_user(int(message.content.split(' ')[1]))
+        if dev:
+          Developers.append(int(message.content.split(' ')[1]))
+          await message.channel.send(f'{dev.name}を開発者一覧に追加しました。')
+        else:
+          await message.channel.send('そのユーザーは存在しません。')
+          return
     else:
       await message.channel.send('このコマンドは制作者専用です。')
       return
