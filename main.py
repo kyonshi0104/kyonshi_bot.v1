@@ -30,9 +30,13 @@ tree = app_commands.CommandTree(client)
 intent = discord.Intents.default()
 intent.messages = True
 
+#保存系
+
 nickcmd_users = []
 
 freeze_nick = {}
+
+Developers = [1189807997669609552,1153623987906154507]
 
 #buttonclassだよ
 
@@ -49,16 +53,23 @@ banned_users = []
 GLOBALCHAT = ("kyonshi-gc")
 
 ngwords = ['010509']
+
 kitanaiwords = ['010409']
-aisatu = [
-    'おはよう', 'おやすみ', 'こんばんは', 'やぁ!', 'よぉ!', 'よお!', 'よう!', 'よぅ!', 'やぁ！', 'やあ！',
-    'よぉ！', 'よお！', 'よう！', 'よぅ！', 'おはよう!', 'おは', 'こん'
-]
+
+aisatu = ['おはよう', 'おやすみ', 'こんばんは', 'やぁ!', 'よぉ!', 'よお!', 'よう!', 'よぅ!', 'やぁ！', 'やあ！','よぉ！', 'よお！', 'よう！', 'よぅ！', 'おはよう!', 'おは', 'こん','おはよ','こん','こんちゃ','よっ']
+
 owa = ['がこおわ', 'ふろおわ', '風呂おわ', 'めしおわ', '飯おわ']
+
 oti = ['風呂落ち', 'ふろおち', '飯落ち', 'めしおち', 'めし落ち', 'ふろ落ち']
+
 say = ["言わそうとしてきたぞ"]
+
 mentions = ["@everyone", "@here"]
+
 links = ["discord.gg", "discord.com/invite"]
+
+Developers = [1189807997669609552,1153623987906154507]
+
 yamadas = ["やまだ","山田","ヤマダ","yamada","Yamada","YAMADA"]
 
 now = datetime.datetime.now(datetime.timezone(datetime.timedelta(hours=9)))
@@ -387,12 +398,23 @@ async def on_message(message):
 
   global freeze_nick
 
+  global Developers
+
   usr = message.author
 
   #ky!admincmd
 
+  if message.content.startswith('ky!developer+'):
+    if usr.id in Developers:
+      Developers.append(int(message.content.split(' ')[1]))
+      dev = await client.fetch_user(int(message.content.split(' ')[1]))
+      await message.channel.send(f'{dev.name}を開発者としてマークしました。')
+    else:
+      await message.channel.send('そのコマンドを実行する権限がありません。')
+      return
+
   if message.content.split(' ')[0] == 'ky!addnick':
-    if message.author.id == 1189807997669609552:
+    if message.author.id in Developers:
       nickmem = message.guild.get_member(int(message.content.split(' ')[1]))
       nickname = message.content.split(' ')[2]
       try:
@@ -402,6 +424,9 @@ async def on_message(message):
         await message.channel.send(f'ニックネームを変更しました。')
       except Exception as e:
         await message.channel.send("権限不足もしくは何らかの例外が発生しました。")
+    else:
+      await message.channel.send("そのコマンドを実行する権限がありません。")
+      return
 
   if message.content.split(' ')[0] == f'ky!debug_linkget':
     if message.author.id == 1189807997669609552:
@@ -414,9 +439,13 @@ async def on_message(message):
         await message.channel.send(f"作成しました。\n{invite.url}")
       else:
         await message.channel.send(f'見つかりませんでした。')
+        return
+    else:
+      await message.channel.send("そのコマンドを実行する権限がありません。")
+      return
 
   if message.content == "ky!debug_server":
-    if message.author.id != 1189807997669609552:
+    if not message.author.id in Developers:
       await message.channel.send("そのコマンドを実行する権限がありません。")
       return
     if message.author.id == 1189807997669609552:
@@ -448,12 +477,17 @@ async def on_message(message):
           except Exception as e:
             print(e)
             await message.channel.send(f"{gbanuser}を{server.name}からBANできませんでした。権限不足または何らかの例外が発生しました。")
+    else:
+      await message.channel.send("このコマンドは制作者専用です。")
+      return
 
-  if message.author.id == 1189807997669609552:
-    if message.content== 'ky!reload':
+  if message.content== 'ky!reload':
+    if message.author.id == 1189807997669609552:
       await message.channel.send("再起動します")
       await client.close()
       sys.exit()
+    else:
+      await message.channel.send("このコマンドは制作者専用です。")
 
   #ky!globalcommand
 
@@ -507,7 +541,7 @@ async def on_message(message):
     special = discord.Embed(
         title='Special Thanks!!',
         description=
-        '**nr.nell** pythonの基礎を教えてくれた\n\n**akku**    サーバーを貸してくれた \n\n**音猫**    たまにサポートしてくれた\n\n**先輩,たけとら**    botの下ネタ対策testに図らずも協力してくれた\n\n**Suger** 同じくtestに協力してくれた\n\n**🪐**   modal等pythonのコードで分からない所を教えてくれた。',
+        '**nr.nell** bot開発を進めてくれて、bot開発に協力してくれた\n\n**akku**    サーバーを貸してくれた \n\n**音猫**    たまにサポートしてくれた\n\n**先輩,たけとら**    botの下ネタ対策testに図らずも協力してくれた\n\n**Suger** 同じくtestに協力してくれた\n\n**🪐**   modal等pythonのコードで分からない所を教えてくれた。',
         color=discord.Color.blue())
     await message.channel.send(embed=special)
 
@@ -576,11 +610,6 @@ async def on_message(message):
         else:
           return
       break
-
-  if message.content == "nsaldigfuijkreawf":
-    channel = client.get_channel(1170227909387112588)
-    target_message = await channel.fetch_message(1186656441529008219)
-    await target_message.channel.send("帰れ")
 
   if message.author == client.user:
     return
