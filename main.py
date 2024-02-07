@@ -437,7 +437,7 @@ async def on_message(message):
       if not message.content.split(' ')[1].isdecimal:
         await message.channel.send('IDが正しくありません。')
         return
-      else:
+      elif not int(message.content.split(' ')[1]) in Developers:
         dev = await client.fetch_user(int(message.content.split(' ')[1]))
         if dev:
           Developers.append(int(message.content.split(' ')[1]))
@@ -445,6 +445,8 @@ async def on_message(message):
         else:
           await message.channel.send('そのユーザーは存在しません。')
           return
+      else:
+        await message.channel.send('そのユーザーはすでに開発者です。')
     else:
       await message.channel.send('このコマンドは制作者専用です。')
       return
