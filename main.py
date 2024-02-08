@@ -38,6 +38,8 @@ freeze_nick = {}
 
 Developers = [1189807997669609552,1153623987906154507]
 
+brackserver = [1165118279044579358]
+
 #buttonclassだよ
 
 
@@ -372,6 +374,23 @@ async def on_ready():
 
   print('ログインしました')
 
+#serverに導入された時の処理
+
+@client.event
+async def on_guild_join(guild):
+  if guild.id in brackserver:
+    m = discord.Embed(title=f'{guild.name} joined.',description='このサーバーがブラックリストに登録されているため、脱退します。')
+    guild.leave()
+    for channel in client.get_guild(1191687272035270666).channels:
+      if channel.id == 1205101611702165504:
+        await channel.send(embed=m)
+    return
+  else:
+    s = discord.Embed(title=f'{guild.name} joined.',description=f'{guild.name}に参加しました。')
+    for channel in client.get_guild(1191687272035270666).channels:
+      if channel.id == 1205101611702165504:
+        await channel.send(embed=s)
+
 #山田じゃない
 
 @client.event
@@ -400,9 +419,46 @@ async def on_message(message):
 
   global Developers
 
+  global brackserver
+
   usr = message.author
 
   #ky!admincmd
+
+  if message.content.startswith('ky!developers'):
+    if usr.id in Developers:
+      bserembed = ("")
+      for bserver in brackserver:
+        bservers = client.get_guild(bserver)
+        bserembed += (f"{bservers}\n")
+      else:
+        bsem = discord.Embed(title="開発者一覧", description=bserembed, color=discord.Color.red())
+        await message.channel.send(embed=bsem)
+    else:
+      await message.channel.send('そのコマンドを実行する権限がありません。')
+      return
+
+  if message.content.startswith('ky!brackserver+'):
+    if usr.id in brackserver:
+      if len(message.content.split(' ')) == 1:
+        await message.channel.send('サーバーを指定してください。')
+        return
+      elif not message.content.split(' ')[1].isdecimal():
+        await message.channel.send('IDが正しくありません。')
+        return
+      elif not int(message.content.split(' ')[1]) in brackserver:
+        try:
+          brackguild = client.get_guild(int(message.content.split(' ')[1]))
+          brackserver.append(int(message.content.split(' ')[1]))
+          await message.channel.send(f'{brackguild.name}をブラックリストに追加しました。')
+        except Exception as e:
+          await message.channel.send('そのサーバーは存在しません。')
+          return
+      else:
+        await message.channel.send('そのサーバーは既にブラックリストに登録されています。')
+    else:
+      await message.channel.send('このコマンドは開発者専用です。')
+      return
 
   if message.content.startswith('ky!developers'):
     if usr.id in Developers:
