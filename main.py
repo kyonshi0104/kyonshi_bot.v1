@@ -504,6 +504,19 @@ async def on_message(message):
       await message.channel.send('このコマンドは開発者専用です。')
       return
 
+  if message.content.startswith('ky!brackusers'):
+    if usr.id in Developers:
+      bues = ("")
+      for bue in brackusers:
+        devuser = await client.fetch_user(bue)
+        bues += (f"{devuser}\n")
+      else:
+        devem = discord.Embed(title="開発者一覧", description=bues, color=discord.Color.red())
+        await message.channel.send(embed=devem)
+    else:
+      await message.channel.send('そのコマンドを実行する権限がありません。')
+      return
+
   if message.content.startswith('ky!brackuser-'):
     if usr.id in Developers:
       if len(message.content.split(' ')) == 1:
