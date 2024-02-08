@@ -440,7 +440,7 @@ async def on_message(message):
       bserembed = ("")
       for bserver in brackserver:
         bservers = client.get_guild(bserver)
-        bserembed += (f"{bservers}\n")
+        bserembed += (f"{bservers}：{bserver}\n")
       else:
         bsem = discord.Embed(title="ブラックリスト一覧", description=bserembed, color=discord.Color.red())
         await message.channel.send(embed=bsem)
