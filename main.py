@@ -38,7 +38,7 @@ freeze_nick = {}
 
 Developers = [1189807997669609552,1153623987906154507]
 
-brackserver = [1165118279044579358]
+brackserver = []
 
 #buttonclassだよ
 
