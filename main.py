@@ -430,9 +430,9 @@ async def on_message(message):
       bserembed = ("")
       for bserver in brackserver:
         bservers = client.get_guild(bserver)
-        bserembed += (f"{bservers}\n")
+        bserembed += (f"{bservers}：{bservers.id}\n")
       else:
-        bsem = discord.Embed(title="開発者一覧", description=bserembed, color=discord.Color.red())
+        bsem = discord.Embed(title="ブラックリスト一覧", description=bserembed, color=discord.Color.red())
         await message.channel.send(embed=bsem)
     else:
       await message.channel.send('そのコマンドを実行する権限がありません。')
