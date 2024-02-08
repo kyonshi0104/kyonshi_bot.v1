@@ -419,7 +419,7 @@ async def on_message(message):
 
   if message.content.startswith('ky!developer-'):
     if usr.id == 1189807997669609552:
-      if not len(message.content.split(' ')) < 3:
+      if len(message.content.split(' ')) == 1:
         await message.channel.send('ユーザーを指定してください。')
         return
       elif not message.content.split(' ')[1].isdecimal():
@@ -437,7 +437,7 @@ async def on_message(message):
 
   if message.content.startswith('ky!developer+'):
     if usr.id == 1189807997669609552:
-      if not len(message.content.split(' ')) < 3:
+      if len(message.content.split(' ')) == 1:
         await message.channel.send('ユーザーを指定してください。')
         return
       elif not message.content.split(' ')[1].isdecimal():
