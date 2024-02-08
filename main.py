@@ -419,7 +419,7 @@ async def on_message(message):
 
   if message.content.startswith('ky!developer-'):
     if usr.id == 1189807997669609552:
-      if not message.content.split(' ')[1].isdecimal:
+      if not message.content.split(' ')[1].isdecimal():
         await message.channel.send('IDが正しくありません。')
         return
       elif int(message.content.split(' ')[1]) in Developers:
@@ -434,7 +434,7 @@ async def on_message(message):
 
   if message.content.startswith('ky!developer+'):
     if usr.id == 1189807997669609552:
-      if not message.content.split(' ')[1].isdecimal:
+      if not message.content.split(' ')[1].isdecimal():
         await message.channel.send('IDが正しくありません。')
         return
       elif not int(message.content.split(' ')[1]) in Developers:
