@@ -38,7 +38,9 @@ freeze_nick = {}
 
 Developers = [1189807997669609552,1153623987906154507]
 
-brackserver = []
+brackserver = [1165118279044579358]
+
+brackusers = [1158390588836696124]
 
 #buttonclassだよ
 
@@ -379,12 +381,28 @@ async def on_ready():
 @client.event
 async def on_guild_join(guild):
   if guild.id in brackserver:
-    m = discord.Embed(title=f'{guild.name} joined.',description='このサーバーがブラックリストに登録されているため、脱退しました。多分。')
-    guild.leave()
+    m = discord.Embed(title=f'{guild.name} joined.',description='このサーバーがブラックリストに登録されているため、脱退しました。多分。', color=discord.Color.red())
+    await guild.leave()
     for channel in client.get_guild(1191687272035270666).channels:
       if channel.id == 1205101611702165504:
         await channel.send(embed=m)
         break
+  else:
+    for channel in client.get_guild(1191687272035270666).channels:
+      if channel.id == 1205101611702165504:
+        joinem = discord.Embed(title=f'{guild.name} joined.',description='サーバーに参加しました。', color=discord.Color.blue())
+        await channel.send(embed=joinem)
+        break
+
+#serverから退出された時の処理
+
+@client.event
+async def on_guild_remove(guild):
+  for channel in client.get_guild(1191687272035270666).channels:
+    if channel.id == 1205101696825434152:
+      leavem = discord.Embed(title=f'{guild.name} left.',description='このサーバーからbotが脱退しました。', color=discord.Color.yellow())
+      await channel.send(embed=leavem)
+      break
 
 #山田じゃない
 
@@ -404,6 +422,9 @@ async def on_member_update(before, after):
 
 @client.event
 async def on_message(message):
+
+  if message.author.id in brackusers:
+    return
 
   if message.author.bot:
     return
