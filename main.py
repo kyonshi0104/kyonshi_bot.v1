@@ -379,17 +379,12 @@ async def on_ready():
 @client.event
 async def on_guild_join(guild):
   if guild.id in brackserver:
-    m = discord.Embed(title=f'{guild.name} joined.',description='このサーバーがブラックリストに登録されているため、脱退します。')
+    m = discord.Embed(title=f'{guild.name} joined.',description='このサーバーがブラックリストに登録されているため、脱退しました。多分。')
     guild.leave()
     for channel in client.get_guild(1191687272035270666).channels:
       if channel.id == 1205101611702165504:
         await channel.send(embed=m)
-    return
-  else:
-    s = discord.Embed(title=f'{guild.name} joined.',description=f'{guild.name}に参加しました。')
-    for channel in client.get_guild(1191687272035270666).channels:
-      if channel.id == 1205101611702165504:
-        await channel.send(embed=s)
+        break
 
 #山田じゃない
 
@@ -433,7 +428,7 @@ async def on_message(message):
         await message.channel.send(f'{target_server}から脱退しました。')
         return
       else:
-        await message.channe.send('サーバーが見つかりませんでした。')
+        await message.channel.send('サーバーが見つかりませんでした。')
 
   if message.content.startswith('ky!brackservers'):
     if usr.id in Developers:
