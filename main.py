@@ -425,7 +425,7 @@ async def on_message(message):
 
   #ky!admincmd
 
-  if message.content.startswith('ky!developers'):
+  if message.content.startswith('ky!brackservers'):
     if usr.id in Developers:
       bserembed = ("")
       for bserver in brackserver:
@@ -439,7 +439,7 @@ async def on_message(message):
       return
 
   if message.content.startswith('ky!brackserver+'):
-    if usr.id in brackserver:
+    if usr.id in Developers:
       if len(message.content.split(' ')) == 1:
         await message.channel.send('サーバーを指定してください。')
         return
