@@ -425,6 +425,16 @@ async def on_message(message):
 
   #ky!admincmd
 
+  if message.content.startswith('ky!debug_server_leave'):
+    if usr.id in Developers:
+      target_server = discord.utils.get(client.guilds, id=int(message.content.split(' ')[1]))
+      if target_server:
+        await target_server.leave()
+        await message.channel.send(f'{target_server}から脱退しました。')
+        return
+      else:
+        await message.channe.send('サーバーが見つかりませんでした。')
+
   if message.content.startswith('ky!brackservers'):
     if usr.id in Developers:
       bserembed = ("")
@@ -447,14 +457,10 @@ async def on_message(message):
         await message.channel.send('IDが正しくありません。')
         return
       elif not int(message.content.split(' ')[1]) in brackserver:
-        target_server = discord.utils.get(client.guilds, id=int(message.content.split(' ')[1]))
-        if target_server:
-          await target_server.leave()
-          await message.channel.send(f'{target_server}から脱退しました。')
         try:
           brackguild = client.get_guild(int(message.content.split(' ')[1]))
           brackserver.append(int(message.content.split(' ')[1]))
-          await message.channel.send(f'{brackguild.name}をブラックリストに追加しました。')
+          await message.channel.send(f'{brackguild}をブラックリストに追加しました。')
         except Exception as e:
           await message.channel.send('そのサーバーは存在しません。')
           return
