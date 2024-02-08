@@ -460,7 +460,8 @@ async def on_message(message):
         try:
           brackguild = client.get_guild(int(message.content.split(' ')[1]))
           brackserver.append(int(message.content.split(' ')[1]))
-          await message.channel.send(f'{brackguild}をブラックリストに追加しました。')
+          a = message.content.split(' ')[1]
+          await message.channel.send(f'{a}をブラックリストに追加しました。')
         except Exception as e:
           await message.channel.send('そのサーバーは存在しません。')
           return
