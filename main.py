@@ -215,11 +215,8 @@ async def get_ping(interaction: discord.Interaction):
   await interaction.response.send_message(f"Pong!\nBotのPing値は{ping}msだよ。")
 
 
-@tree.command(name='random',
-              description='乱数を生成します。デフォルトでは0~100の数値からランダムに一つ選びます')
-async def get_random(interaction: discord.Interaction,
-                     min: int = 0,
-                     max: int = 100):
+@tree.command(name='random',description='乱数を生成します。デフォルトでは0~100の数値からランダムに一つ選びます')
+async def get_random(interaction: discord.Interaction,min: int = 0,max: int = 100):
   raodom = random.randint(min, max)
   raodomembed = discord.Embed(title='乱数',
                               description=raodom,
@@ -381,7 +378,7 @@ async def on_ready():
 @client.event
 async def on_guild_join(guild):
   if guild.id in brackserver:
-    m = discord.Embed(title=f'{guild.name} joined.',description='このサーバーがブラックリストに登録されているため、脱退しました。多分。', color=discord.Color.red())
+    m = discord.Embed(title=f'{guild.name} joined.',description='このサーバーがブラックリストに登録されているため、脱退しました。', color=discord.Color.red())
     await guild.leave()
     for channel in client.get_guild(1191687272035270666).channels:
       if channel.id == 1205101611702165504:
@@ -437,6 +434,8 @@ async def on_message(message):
 
   global brackserver
 
+  global brackusers
+
   usr = message.author
 
   #ky!admincmd
@@ -487,6 +486,67 @@ async def on_message(message):
       await message.channel.send('このコマンドは開発者専用です。')
       return
 
+  if message.content.startswith('ky!brackserver-'):
+    if usr.id in Developers:
+      if len(message.content.split(' ')) == 1:
+        await message.channel.send('サーバーを指定してください。')
+        return
+      elif not message.content.split(' ')[1].isdecimal():
+        await message.channel.send('IDが正しくありません。')
+        return
+      elif int(message.content.split(' ')[1]) in brackserver:
+        brackserver.remove(int(message.content.split(' ')[1]))
+        removebser = client.get_guild(int(message.content.split(' ')[1]))
+        await message.channel.send(f'{removebser}をブラックリストから削除しました。')
+      else:
+        await message.channel.send('そのサーバーはブラックリストに登録されていません。')
+    else:
+      await message.channel.send('このコマンドは開発者専用です。')
+      return
+
+  if message.content.startswith('ky!brackuser-'):
+    if usr.id in Developers:
+      if len(message.content.split(' ')) == 1:
+        await message.channel.send('ユーザーを指定してください。')
+        return
+      elif not message.content.split(' ')[1].isdecimal():
+        await message.channel.send('IDが正しくありません。')
+        return
+      elif int(message.content.split(' ')[1]) in brackusers:
+        brackusers.remove(int(message.content.split(' ')[1]))
+        removeuser = await client.fetch_user(int(message.content.split(' ')[1]))
+        await message.channel.send(f'{removeuser.name}をブラックリストから削除しました。')
+      else:
+        await message.channel.send('そのユーザーはブラックリストに登録されていません。')
+    else:
+      await message.channel.send('このコマンドは開発者専用です。')
+      return
+
+  if message.content.startswith('ky!brackuser+'):
+    if usr.id in Developers:
+      if len(message.content.split(' ')) == 1:
+        await message.channel.send('ユーザーを指定してください。')
+        return
+      elif not message.content.split(' ')[1].isdecimal():
+        await message.channel.send('IDが正しくありません。')
+        return
+      elif not int(message.content.split(' ')[1]) in brackusers:
+        try:
+          brackuser = await client.fetch_user(int(message.content.split(' ')[1]))
+          brackusers.append(int(message.content.split(' ')[1]))
+          if brackuser.id in Developers:
+            Developers.remove(brackuser.id)
+            await message.channel.send(f'{brackuser.name}を開発者一覧から削除しました。')
+          await message.channel.send(f'{brackuser.name}をブラックリストに登録しました。')
+        except Exception as e:
+          await message.channel.send('そのユーザーは存在しません。')
+          return
+      else:
+        await message.channel.send('そのユーザーはすでにブラックリストに登録されています。')
+    else:
+      await message.channel.send('このコマンドは開発者専用です。')
+      return
+  
   if message.content.startswith('ky!developers'):
     if usr.id in Developers:
       devs = ("")
@@ -556,7 +616,7 @@ async def on_message(message):
       return
 
   if message.content.split(' ')[0] == f'ky!debug_linkget':
-    if message.author.id == 1189807997669609552:
+    if message.author.id in Developers:
       guild = client.get_guild(int(message.content.split(' ')[1]))
       text = guild.text_channels
       if text:
@@ -575,7 +635,7 @@ async def on_message(message):
     if not message.author.id in Developers:
       await message.channel.send("そのコマンドを実行する権限がありません。")
       return
-    if message.author.id == 1189807997669609552:
+    if message.author.id in Developers:
      guildlist = client.guilds
      server_info = ""
      serveritiran = discord.Embed(title="kyonshi_bot参加サーバー一覧",description="参加サーバーの一覧を表示します\n",color=discord.Color.blue())
