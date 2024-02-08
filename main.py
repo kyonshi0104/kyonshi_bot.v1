@@ -447,6 +447,10 @@ async def on_message(message):
         await message.channel.send('IDが正しくありません。')
         return
       elif not int(message.content.split(' ')[1]) in brackserver:
+        target_server = discord.utils.get(client.guilds, id=int(message.content.split(' ')[1]))
+        if target_server:
+          await target_server.leave()
+          await message.channnel.send(f'{target_server}から脱退しました。')
         try:
           brackguild = client.get_guild(int(message.content.split(' ')[1]))
           brackserver.append(int(message.content.split(' ')[1]))
