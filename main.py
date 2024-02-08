@@ -444,11 +444,11 @@ async def on_message(message):
         await message.channel.send('IDが正しくありません。')
         return
       elif not int(message.content.split(' ')[1]) in Developers:
-        dev = await client.fetch_user(int(message.content.split(' ')[1]))
-        if dev:
+        try:
+          dev = await client.fetch_user(int(message.content.split(' ')[1]))
           Developers.append(int(message.content.split(' ')[1]))
           await message.channel.send(f'{dev.name}を開発者一覧に追加しました。')
-        else:
+        except Exception as e:
           await message.channel.send('そのユーザーは存在しません。')
           return
       else:
