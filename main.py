@@ -559,7 +559,7 @@ async def on_message(message):
     else:
       await message.channel.send('このコマンドは開発者専用です。')
       return
-  
+
   if message.content.startswith('ky!developers'):
     if usr.id in Developers:
       devs = ("")
@@ -757,11 +757,6 @@ async def on_message(message):
   if message.content == 'kyonshi':
     await message.channel.send('が開発したbotです')
 
-  if message.content == 'やぁ':
-    await message.channel.send('やぁ')
-
-  if message.author.bot:
-    return
   if message.content == 'やあ':
     await message.channel.send('やぁ')
 
