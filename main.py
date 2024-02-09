@@ -52,6 +52,9 @@ class DeleteButton(discord.ui.Button):
 
 
 #words一覧
+
+omikuji = ['大凶','凶','末吉','吉','小吉','中吉','大吉']
+
 banned_users = []
 
 GLOBALCHAT = ("kyonshi-gc")
@@ -743,6 +746,11 @@ async def on_message(message):
         '**nr.nell** bot開発を進めてくれて、bot開発に協力してくれた\n\n**akku**    サーバーを貸してくれた \n\n**音猫**    たまにサポートしてくれた\n\n**先輩,たけとら**    botの下ネタ対策testに図らずも協力してくれた\n\n**Suger** 同じくtestに協力してくれた\n\n**🪐**   modal等pythonのコードで分からない所を教えてくれた。',
         color=discord.Color.blue())
     await message.channel.send(embed=special)
+
+  if message.content == 'ky!omikuji':
+    ms = random.randint(0, 6)
+    mikuji = discord.Embed(title='おみくじ', description=omikuji[ms], color=discord.Color.blue())
+    await message.channel.send(embed=mikuji)
 
   #messageに反応する奴らだよ
 
