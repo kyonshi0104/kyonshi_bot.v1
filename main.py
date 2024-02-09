@@ -419,12 +419,7 @@ async def on_member_update(before, after):
 
 @client.event
 async def on_message(message):
-
-  if message.author.id in brackusers:
-    return
-
-  if message.author.bot:
-    return
+  global brackusers
 
   global nickcmd_users
 
@@ -434,7 +429,11 @@ async def on_message(message):
 
   global brackserver
 
-  global brackusers
+  if message.author.id in brackusers:
+    return
+
+  if message.author.bot:
+    return
 
   usr = message.author
 
