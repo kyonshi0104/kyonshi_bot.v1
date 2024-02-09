@@ -513,7 +513,7 @@ async def on_message(message):
         devuser = await client.fetch_user(bue)
         bues += (f"{devuser}\n")
       else:
-        devem = discord.Embed(title="開発者一覧", description=bues, color=discord.Color.red())
+        devem = discord.Embed(title="ブラックリスト", description=bues, color=discord.Color.red())
         await message.channel.send(embed=devem)
     else:
       await message.channel.send('そのコマンドを実行する権限がありません。')
@@ -748,7 +748,10 @@ async def on_message(message):
     await message.channel.send(embed=special)
 
   if message.content == 'ky!omikuji':
-    ms = random.randint(0, 6)
+    if message.author.id == 1189807997669609552:
+      ms = 6
+    else:
+      ms = random.randint(0, 6)
     mikuji = discord.Embed(title='おみくじ', description=omikuji[ms], color=discord.Color.blue())
     await message.channel.send(embed=mikuji)
 
