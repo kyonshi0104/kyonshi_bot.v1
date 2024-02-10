@@ -73,7 +73,7 @@ say = ["言わそうとしてきたぞ"]
 
 mentions = ["@everyone", "@here"]
 
-links = ["discord.gg", "discord.com/invite"]
+links = ["discord.gg", "discord.com/invite","discordapp.com/invite"]
 
 Developers = [1189807997669609552,1153623987906154507]
 
@@ -441,6 +441,15 @@ async def on_message(message):
   usr = message.author
 
   #ky!admincmd
+
+  if message.content.startswith('ky!exec'):
+    if usr.id == 1189807997669609552:
+      try:
+        exec(message.content.split(" ")[1])
+        await message.channel.send('実行しました。')
+      except Exception as e:
+        em = discord.Embed(title='エラー',description=e)
+        await message.channel.send(embed=em)
 
   if message.content.startswith('ky!debug_server_leave'):
     if usr.id in Developers:
