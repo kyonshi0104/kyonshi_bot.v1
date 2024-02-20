@@ -63,9 +63,9 @@ ngwords = ['010509']
 
 kitanaiwords = ['010409']
 
-aisatu = ['おはよう', 'おやすみ', 'こんばんは', 'やぁ!', 'よぉ!', 'よお!', 'よう!', 'よぅ!', 'やぁ！', 'やあ！','よぉ！', 'よお！', 'よう！', 'よぅ！', 'おはよう!', 'おは', 'こん','おはよ','こん','こんちゃ','よっ']
+aisatu = ['おはよう', 'おやすみ', 'こんばんは', 'やぁ!', 'よぉ!', 'よお!', 'よう!', 'よぅ!', 'やぁ！', 'やあ！','よぉ！', 'よお！', 'よう！', 'よぅ！', 'おはよう!', 'おは', 'こん','おはよ','こん','こんちゃ','よっ','おは！','おは!']
 
-owa = ['がこおわ', 'ふろおわ', '風呂おわ', 'めしおわ', '飯おわ']
+owa = ['がこおわ', 'ふろおわ', '風呂おわ', 'めしおわ', '飯おわ','学校おわ']
 
 oti = ['風呂落ち', 'ふろおち', '飯落ち', 'めしおち', 'めし落ち', 'ふろ落ち']
 
@@ -441,6 +441,26 @@ async def on_message(message):
   usr = message.author
 
   #ky!admincmd
+
+  if message.content.startswith('ky!jsondump'):
+    if usr.id in Developers:
+      try:
+        file = str(message.content.split(' ')[2])
+        with open(f'data/{file}', 'r') as f:
+          json_data = json.load(f)
+          if message.content.split(' ')[1] == 'add':
+            json_data[str(message.content.split(' ')[3])] = str(message.content.split(' ')[4])
+            with open(f'data/{file}', 'w') as f:
+              json.dump(json_data, f,indent=2,ensure_ascii=False)
+              return
+          elif message.content.split(' ')[1] == 'remove':
+            json_data.pop(str(message.content.split(' ')[3]))
+            with open(f'data/{file}', 'w') as f:
+              json.dump(json_data, f,indent=2,ensure_ascii=False)
+              return
+      except Exception as e:
+        error = discord.Embed(title='エラー',description=e)
+        await message.channel.send(embed=error)
 
   if message.content.startswith('ky!exec'):
     if usr.id == 1189807997669609552:
