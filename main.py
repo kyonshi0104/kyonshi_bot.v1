@@ -446,16 +446,16 @@ async def on_message(message):
     if usr.id in Developers:
       try:
         file = str(message.content.split(' ')[2])
-        with open(f'data/{file}', 'r') as f:
+        with open(f'{file}', 'r') as f:
           json_data = json.load(f)
           if message.content.split(' ')[1] == 'add':
             json_data[str(message.content.split(' ')[3])] = str(message.content.split(' ')[4])
-            with open(f'data/{file}', 'w') as f:
+            with open(f'{file}', 'w') as f:
               json.dump(json_data, f,indent=2,ensure_ascii=False)
               return
           elif message.content.split(' ')[1] == 'remove':
             json_data.pop(str(message.content.split(' ')[3]))
-            with open(f'data/{file}', 'w') as f:
+            with open(f'{file}', 'w') as f:
               json.dump(json_data, f,indent=2,ensure_ascii=False)
               return
       except Exception as e:
