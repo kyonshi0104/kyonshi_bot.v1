@@ -466,7 +466,7 @@ async def on_message(message):
   if message.content.startswith('ky!jsonview'):
     if usr.id in Developers:
       try:
-        await message.channel.send(file=discord.File(f'/ex/kyo/kyonshi_bot/data/{str(message.content.split(" ")[2])}'))
+        await message.channel.send(file=discord.File(f'/ex/kyon/kyonshi_bot/data/{str(message.content.split(" ")[1])}'))
       except Exception as e:
         error = discord.Embed(title='エラー',description=e)
         await message.channel.send(embed=error)
