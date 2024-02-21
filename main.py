@@ -173,9 +173,10 @@ async def bancmd(interaction: discord.Interaction, member: discord.Member, reaso
         await interaction.response.send_message(f"❌{interaction.user.mention}はその権限を持っていません。")
 
 @tree.command(name="unban", description="指定したユーザーのBANを解除します。")
-async def unbancomd(interaction: discord.Interaction, member: discord.Member, reason: str = ("理由は指定されていません")):
+async def unbancomd(interaction: discord.Interaction, member: int, reason: str = ("理由は指定されていません")):
       if interaction.user.guild_permissions.ban_members:
-        await interaction.guild.unban(member, reason=reason)
+        members = await client.fetch_user(member)
+        await interaction.guild.unban(members, reason=reason)
         await interaction.response.send_message(f"✅{member.mention} のBANを解除しました。")
       else:
         await interaction.response.send_message(f"❌{interaction.user.mention}はその権限を持っていません。")
