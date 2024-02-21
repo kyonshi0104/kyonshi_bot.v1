@@ -445,7 +445,7 @@ async def on_message(message):
     if usr.id in Developers:
       try:
         file = str(message.content.split(' ')[2])
-        with open(f'/ex/kyon/kyonshi_bot/data/{file}', 'r') as f:
+        with open(f'/ex/kyon/kyonshi_bot/data/{file}', 'r+') as f:
           json_data = json.load(f)
           key = str(message.content.split(' ')[3])
           if message.content.split(' ')[1] == 'add':
