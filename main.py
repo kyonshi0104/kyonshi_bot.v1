@@ -9,7 +9,6 @@ from discord.flags import MessageFlags
 import qrcode
 import requests
 import logging
-import json
 import urllib.request
 from datetime import timedelta
 from discord import user
