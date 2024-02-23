@@ -452,6 +452,7 @@ async def on_message(message):
           if message.content.split(' ')[1] == 'add':
             value = str(message.content.split(' ')[4])
             json_data[key] = value
+            f.seek(0)
             json.dump(json_data, f,indent=2,ensure_ascii=False)
             await message.channel.send(f'{file}に{key},{value}を追加しました。')
             return
