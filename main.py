@@ -453,7 +453,6 @@ async def on_message(message):
             value = str(message.content.split(' ')[4])
             json_data[key] = value
             await message.channel.send(f'{file}に{key},{value}を追加しました。')
-            return
           elif message.content.split(' ')[1] == 'remove':
             json_data.pop(str(message.content.split(' ')[3]))
             await message.channel.send(f'{file}から{key}を削除しました。')
@@ -462,6 +461,7 @@ async def on_message(message):
       except Exception as e:
         error = discord.Embed(title='エラー',description=e)
         await message.channel.send(embed=error)
+      return
 
   if message.content.startswith('ky!jsonview'):
     if usr.id in Developers:
