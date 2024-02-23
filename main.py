@@ -732,10 +732,21 @@ async def on_message(message):
   #ky!globalcommand
 
   if message.content.startswith('ky!events'):
-    japan_time = datetime.datetime.now(datetime.timezone(datetime.timedelta(hours=9)))
-    month = japan_time.month
-    day = japan_time.day
-    time_data = (f"{month}/{day}")
+    today = ('false')
+    if len(message.content.split(' ')) == 1:
+      japan_time = datetime.datetime.now(datetime.timezone(datetime.timedelta(hours=9)))
+      month = japan_time.month
+      day = japan_time.day
+      time_data = (f"{month}/{day}")
+      today = ('true')
+    elif len(message.content.split(' ')) == 2:
+      if message.content.split(' ')[1] in ("/"):
+        time_data = message.content.split(' ')[1]
+    elif len(message.content.split(' ')) == 3:
+      time_data = (f'{message.content.split(' ')[1]}/{message.content.split(" ")[2]}')
+    else:
+      await message.channel.send("引数が不正です。")
+      return
     with open('/ex/kyon/kyonshi_bot/data/event.json', 'r') as f:
       try:
         event = json.load(f)
@@ -745,7 +756,10 @@ async def on_message(message):
         event_embed = discord.Embed(title=event_title, description=event_description)
         await message.channel.send(embed=event_embed)
       except Exception as e:
-        await message.channel.send("今日のイベントはありません。")
+        if today == 'true':
+          await message.channel.send("今日のイベントはありません。")
+        else:
+          await message.channel.send("その日のイベントはありません。")
       return
 
   if message.content.startswith("ky!check_permissions"):
