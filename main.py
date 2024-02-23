@@ -736,7 +736,7 @@ async def on_message(message):
     month = japan_time.month
     day = japan_time.day
     time_data = (f"{month}/{day}")
-    with open('event.json', 'r') as f:
+    with open('/ex/kyon/kyonshi_bot/data/event.json', 'r') as f:
       try:
         event = json.load(f)
         event_data = event[str(time_data)]
