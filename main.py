@@ -733,6 +733,7 @@ async def on_message(message):
 
   if message.content.startswith('ky!events'):
     today = ('false')
+    time_data = ('null')
     if len(message.content.split(' ')) == 1:
       japan_time = datetime.datetime.now(datetime.timezone(datetime.timedelta(hours=9)))
       month = japan_time.month
@@ -743,7 +744,9 @@ async def on_message(message):
       if message.content.split(' ')[1] in ("/"):
         time_data = message.content.split(' ')[1]
     elif len(message.content.split(' ')) == 3:
-      time_data = (f'{message.content.split(' ')[1]}/{message.content.split(" ")[2]}')
+      months = message.content.split(' ')[1]
+      days = message.content.split(' ')[2]
+      time_data = (f'{months}/{days}')
     else:
       await message.channel.send("引数が不正です。")
       return
