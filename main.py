@@ -742,7 +742,7 @@ async def on_message(message):
       today = ('true')
     elif len(message.content.split(' ')) == 2:
       if message.content.split(' ')[1] in ("/"):
-        time_data = message.content.split(' ')[1]
+        time_data = str(message.content.split(' ')[1])
     elif len(message.content.split(' ')) == 3:
       months = message.content.split(' ')[1]
       days = message.content.split(' ')[2]
