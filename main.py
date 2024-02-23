@@ -731,6 +731,23 @@ async def on_message(message):
 
   #ky!globalcommand
 
+  if message.content.startswith('ky!events'):
+    japan_time = datetime.datetime.now(datetime.timezone(datetime.timedelta(hours=9)))
+    month = japan_time.month
+    day = japan_time.day
+    time_data = (f"{month}/{day}")
+    with open('event.json', 'r') as f:
+      try:
+        event = json.load(f)
+        event_data = event[str(time_data)]
+        event_title = event_data.split("_")[0]
+        event_description = event_data.split("_")[1]
+        event_embed = discord.Embed(title=event_title, description=event_description)
+        await message.channel.send(embed=event_embed)
+      except Exception as e:
+        await message.channel.send("今日のイベントはありません。")
+      return
+
   if message.content.startswith("ky!check_permissions"):
     if len(message.mentions) != 1:
       await message.reply("ユーザーを指定してください。")
@@ -748,7 +765,7 @@ async def on_message(message):
 
   if message.content == 'ky!invite':
     await message.reply('[botのリンクだよ](<https://discord.com/oauth2/authorize?client_id=1190912307790872637&permissions=67061618699863&scope=bot>)')
-
+    
   if message.content == 'ky!time':
     now = datetime.datetime.now(datetime.timezone(datetime.timedelta(hours=9)))
     await message.reply(f"現在時刻は{now.hour}時{now.minute}分{now.second}秒です")
