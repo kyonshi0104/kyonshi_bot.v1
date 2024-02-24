@@ -822,10 +822,10 @@ async def on_message(message):
     else:
       ms = random.randint(0, 6)
     if len(message.content.split(' ')) == 2:
-      mik = (f'{message.content.split(" ")[1]}さんの運勢は{omikuji[ms]}です。')
+      mik = (f'{message.content.split(" ")[1]}さんの運勢は{omikuji[ms]}です。きっといい一日になるでしょう！')
       mikuji = discord.Embed(title='おみくじ', description=mik, color=discord.Color.blue())
     else:
-      mik = (F'あなたの運勢は{omikuji[ms]}です。')
+      mik = (F'あなたの運勢は{omikuji[ms]}です。良い一日を！')
       mikuji = discord.Embed(title='おみくじ', description=mik, color=discord.Color.blue())
     await message.channel.send(embed=mikuji)
 
