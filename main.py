@@ -816,12 +816,17 @@ async def on_message(message):
         color=discord.Color.blue())
     await message.channel.send(embed=special)
 
-  if message.content == 'ky!omikuji':
+  if message.startswith('ky!omikuji'):
     if message.author.id == 1189807997669609552:
       ms = 6
     else:
       ms = random.randint(0, 6)
-    mikuji = discord.Embed(title='おみくじ', description=omikuji[ms], color=discord.Color.blue())
+    if len(message.content.split(' ')) == 2:
+      mik = (f'{message.content.split(" ")[1]}さんの運勢は{omikuji[ms]}です。')
+      mikuji = discord.Embed(title='おみくじ', description=mik, color=discord.Color.blue())
+    else:
+      mik = (F'あなたの運勢は{omikuji[ms]}です。')
+      mikuji = discord.Embed(title='おみくじ', description=mik, color=discord.Color.blue())
     await message.channel.send(embed=mikuji)
 
   #messageに反応する奴らだよ
