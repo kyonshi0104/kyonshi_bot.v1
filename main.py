@@ -822,7 +822,7 @@ async def on_message(message):
     else:
       ms = random.randint(0, 6)
     if len(message.content.split(' ')) == 2:
-      mik = (f'{message.content.split(" ")[1]}さんの運勢は大凶です。自害しましょう！')
+      mik = (f'{message.content.split(" ")[1]}さんはおみくじを引いてる暇があったら学校行ったらどうですか？')
       mikuji = discord.Embed(title='おみくじ', description=mik, color=discord.Color.blue())
     else:
       mik = (F'あなたの運勢は{omikuji[ms]}です。良い一日を！')
