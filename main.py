@@ -816,7 +816,7 @@ async def on_message(message):
         color=discord.Color.blue())
     await message.channel.send(embed=special)
 
-  if message.startswith('ky!omikuji'):
+  if message.content.startswith('ky!omikuji'):
     if message.author.id == 1189807997669609552:
       ms = 6
     else:
