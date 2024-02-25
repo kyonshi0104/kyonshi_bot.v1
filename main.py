@@ -663,7 +663,8 @@ async def on_message(message):
         freeze_nick[str(nickmem.id)] = nickname
         await message.channel.send(f'ニックネームを変更しました。')
       except Exception as e:
-        await message.channel.send("権限不足もしくは何らかの例外が発生しました。")
+        em = discord.Embed(title='エラー',description=e)
+        await message.channel.send("権限不足もしくは何らかの例外が発生しました。",embed=em)
     else:
       await message.channel.send("そのコマンドを実行する権限がありません。")
       return
