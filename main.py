@@ -478,8 +478,9 @@ async def on_message(message):
 
   if message.content.startswith('ky!exec'):
     if usr.id == 1189807997669609552:
+      execcmd = message.content.replace('ky!exec ',"")
       try:
-        exec(message.content.split(" ")[1])
+        exec(execcmd)
         await message.channel.send('実行しました。')
       except Exception as e:
         em = discord.Embed(title='エラー',description=e)
