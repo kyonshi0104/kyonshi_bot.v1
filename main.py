@@ -412,6 +412,11 @@ async def on_member_update(before, after):
       # ニックネームが変更された場合
       if after.id == client.user.id:
           # 自分のニックネームが変更された場合
+          editnick = await client.get_guild(1191687272035270666):
+          editnick_channel = await editnick.fetch_channel(1213120639813156884):
+          now = datetime.datetime.now
+          log_em = discord.Embed(title='ニックネーム変更', description=f'{now.hour}時{now.minute}分{now.second}にbotの名前が{after.nick}に変更されました。', color=discord.Color.blue()
+          await editnick_channel.send(embed=log_em)
           if any(name in after.nick.lower() for name in yamadas):
               await after.edit(nick='kyonshi_bot')
 
