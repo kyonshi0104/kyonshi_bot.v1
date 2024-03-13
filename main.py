@@ -98,6 +98,35 @@ class ModalName(discord.ui.Modal):
 
 #/cmdだよ 自分でもよくわかってないよ
 
+@tree.command(name="message_deleter", description="指定された条件に基づいてメッセージを一括削除します。")
+async def message_deletercommand(interaction: discord.Interaction, member: int = 0, channel: int = 0, text: str = "None", count: int = 10000):
+    try: 
+      if not member == 0:
+        delete_member = client.get_user(int(member))
+        if delete_member is None:
+          await interaction.response.send_message("指定されたメンバーが見つかりませんでした。")
+          return
+      if not channel == 0:
+        delete_channel = client.get_channel(int(channel))
+        if delete_channel is None:
+          await interaction.response.send_message("指定されたチャンネルが見つかりませんでした。")
+          return
+      delete_count = 0
+      for delete_channel_now in interaction.guild.channels:
+        async for message in delete_channel_now.history(limit = count):
+          if channel is 0 or delete_channel_now.id == channel:
+            if member is 0 or message.author.id == member:
+              if text is "None" or text in message.content:
+                  await message.delete()
+                  delete_count += 1
+      await interaction.response.send_message(f"全部で{delete_member}個のメッセージを削除しました。実行者は{interaction.user.id}です。")
+    except Exception as e:
+      er_em = discord.Embed(title="エラー", description=f'```{e}```')
+      await interaction.response.send_message(embed=er_em)
+      return
+                  
+      
+
 @tree.command(name="redirect", description="指定したURLのリダイレクト先を調べて表示します。")
 async def redirectcommand(interaction: discord.Interaction, url: str):
     try:
