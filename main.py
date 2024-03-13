@@ -119,7 +119,7 @@ async def message_deletercommand(interaction: discord.Interaction, member: int =
               if text is "None" or text in message.content:
                   await message.delete()
                   delete_count += 1
-      await interaction.response.send_message(f"全部で{delete_member}個のメッセージを削除しました。実行者は{interaction.user.id}です。")
+      await interaction.response.send_message(f"全部で{delete_count}個のメッセージを削除しました。実行者は{interaction.user.id}です。")
     except Exception as e:
       er_em = discord.Embed(title="エラー", description=f'```{e}```')
       await interaction.response.send_message(embed=er_em)
