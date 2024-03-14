@@ -111,10 +111,13 @@ async def message_deletercommand(interaction: discord.Interaction, member: int =
         if delete_channel is None:
           await interaction.response.send_message("指定されたチャンネルが見つかりませんでした。")
           return
+      if not isinstance(delete_channel, discord.TextChannel):
+          await interaction.response.send_message("指定されたチャンネルはテキストチャンネルではありません。")
+          return
       delete_count = 0
-      for delete_channel_now in interaction.guild.channels:
-        async for message in delete_channel_now.history(limit = count):
-          if channel is 0 or delete_channel_now.id == channel:
+      for delete_channel_now in interaction.guild.text_channels:
+        if delete_channel is None or delete_channel == delete_channel_now:
+          async for message in delete_channel_now.history(limit = count):
             if member is 0 or message.author.id == member:
               if text is "None" or text in message.content:
                   await message.delete()
