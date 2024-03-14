@@ -122,6 +122,7 @@ async def message_deletercommand(interaction: discord.Interaction, member: int =
           await interaction.response.send_message("指定されたチャンネルはテキストチャンネルではありません。")
           return
       delete_count = 0
+      await interaction.response.defer(ephemeral=True)
       for delete_channel_now in interaction.guild.text_channels:
         if delete_channel is None or delete_channel == delete_channel_now:
           async for message in delete_channel_now.history(limit = count):
@@ -129,10 +130,10 @@ async def message_deletercommand(interaction: discord.Interaction, member: int =
               if text is "None" or text in message.content:
                   await message.delete()
                   delete_count += 1
-      await interaction.response.send_message(f"全部で{delete_count}個のメッセージを削除しました。実行者は{interaction.user.id}です。")
+      await interaction.followup.send(content=f"全部で{delete_count}個のメッセージを削除しました。実行者は{interaction.user.id}です。")
     except Exception as e:
       er_em = discord.Embed(title="エラー", description=f'```{e}```')
-      await interaction.response.send_message(embed=er_em)
+      await interaction.followup.send(embed=er_em)
       return
                   
       
