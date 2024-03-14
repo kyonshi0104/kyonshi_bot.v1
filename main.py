@@ -99,22 +99,22 @@ class ModalName(discord.ui.Modal):
 #/cmdだよ 自分でもよくわかってないよ
 
 @tree.command(name="message_deleter", description="指定された条件に基づいてメッセージを一括削除します。")
-async def message_deletercommand(interaction: discord.Interaction, member: int = 0, channel: int = 0, text: str = "None", count: int = 10000):
+async def message_deletercommand(interaction: discord.Interaction, member: str = "0", channel: str = "0", text: str = "None", count: int = 10000):
     try: 
       delete_channel = None
       await interaction.response.defer()
       if not interaction.user.guild_permissions.manage_channels:
         await interaction.followup.send(content="このコマンドはチャンネル管理権限の所有者のみ発動できるように設定されています。", ephemeral=True)
         return
-      if member == 0 and channel == 0 and text == "None":
+      if member == "0" and channel == "0" and text == "None":
         await interaction.followup.send(content="メンバー、チャンネル、テキストの全てを指定していないため、実行をキャンセルしました。", ephemeral=True)
         return
-      if not member == 0:
+      if not member == "0":
         delete_member = client.get_user(int(member))
         if delete_member is None:
           await interaction.followup.send(content="指定されたメンバーが見つかりませんでした。")
           return
-      if not channel == 0:
+      if not channel == "0":
         delete_channel = client.get_channel(int(channel))
         if delete_channel is None:
           await interaction.followup.send(content="指定されたチャンネルが見つかりませんでした。")
@@ -126,14 +126,14 @@ async def message_deletercommand(interaction: discord.Interaction, member: int =
       for delete_channel_now in interaction.guild.text_channels:
         if delete_channel is None or delete_channel == delete_channel_now:
           async for message in delete_channel_now.history(limit = count):
-            if member is 0 or message.author.id == member:
+            if member is "0" or message.author.id == member:
               if text is "None" or text in message.content:
                   await message.delete()
                   delete_count += 1
       await interaction.followup.send(content=f"全部で{delete_count}個のメッセージを削除しました。実行者は{interaction.user.id}です。")
     except Exception as e:
       er_em = discord.Embed(title="エラー", description=f'```{e}```')
-      await interaction.followup.send(content="",embed=er_em)
+      await interaction.followup.send(content="エラーが発生しました。", embed=er_em)
       return
                   
       
