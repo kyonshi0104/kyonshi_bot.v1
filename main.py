@@ -105,7 +105,7 @@ async def message_deletercommand(interaction: discord.Interaction, member: int =
       if not interaction.user.guild_permissions.manage_channels:
         await interaction.response.send_message("このコマンドはチャンネル管理権限の所有者のみ発動できるように設定されています。", ephemeral=True)
         return
-      if member == 0 and channel == 0 and text == "None"
+      if member == 0 and channel == 0 and text == "None":
         await interaction.response.send_message("メンバー、チャンネル、テキストの全てを指定していないため、実行をキャンセルしました。", ephemeral=True)
         return
       if not member == 0:
@@ -122,7 +122,6 @@ async def message_deletercommand(interaction: discord.Interaction, member: int =
           await interaction.response.send_message("指定されたチャンネルはテキストチャンネルではありません。")
           return
       delete_count = 0
-      await interaction.response.defer(ephemeral=True)
       for delete_channel_now in interaction.guild.text_channels:
         if delete_channel is None or delete_channel == delete_channel_now:
           async for message in delete_channel_now.history(limit = count):
