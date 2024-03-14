@@ -101,6 +101,7 @@ class ModalName(discord.ui.Modal):
 @tree.command(name="message_deleter", description="指定された条件に基づいてメッセージを一括削除します。")
 async def message_deletercommand(interaction: discord.Interaction, member: int = 0, channel: int = 0, text: str = "None", count: int = 10000):
     try: 
+      delete_channel = None
       if not member == 0:
         delete_member = client.get_user(int(member))
         if delete_member is None:
@@ -111,7 +112,7 @@ async def message_deletercommand(interaction: discord.Interaction, member: int =
         if delete_channel is None:
           await interaction.response.send_message("指定されたチャンネルが見つかりませんでした。")
           return
-      if not isinstance(delete_channel, discord.TextChannel):
+        if not isinstance(delete_channel, discord.TextChannel):
           await interaction.response.send_message("指定されたチャンネルはテキストチャンネルではありません。")
           return
       delete_count = 0
