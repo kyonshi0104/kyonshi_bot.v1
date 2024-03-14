@@ -102,6 +102,12 @@ class ModalName(discord.ui.Modal):
 async def message_deletercommand(interaction: discord.Interaction, member: int = 0, channel: int = 0, text: str = "None", count: int = 10000):
     try: 
       delete_channel = None
+      if not interaction.user.guild_permissions.manage_channels:
+        await interaction.response.send_message("このコマンドはチャンネル管理権限の所有者のみ発動できるように設定されています。", ephemeral=True)
+        return
+      if member == 0 and channel == 0 and text == "None"
+        await interaction.response.send_message("メンバー、チャンネル、テキストの全てを指定していないため、実行をキャンセルしました。", ephemeral=True)
+        return
       if not member == 0:
         delete_member = client.get_user(int(member))
         if delete_member is None:
