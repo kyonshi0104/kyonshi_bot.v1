@@ -102,24 +102,25 @@ class ModalName(discord.ui.Modal):
 async def message_deletercommand(interaction: discord.Interaction, member: int = 0, channel: int = 0, text: str = "None", count: int = 10000):
     try: 
       delete_channel = None
+      await interaction.response.defer()
       if not interaction.user.guild_permissions.manage_channels:
-        await interaction.response.send_message("このコマンドはチャンネル管理権限の所有者のみ発動できるように設定されています。", ephemeral=True)
+        await interaction.followup.send(content="このコマンドはチャンネル管理権限の所有者のみ発動できるように設定されています。", ephemeral=True)
         return
       if member == 0 and channel == 0 and text == "None":
-        await interaction.response.send_message("メンバー、チャンネル、テキストの全てを指定していないため、実行をキャンセルしました。", ephemeral=True)
+        await interaction.followup.send(content="メンバー、チャンネル、テキストの全てを指定していないため、実行をキャンセルしました。", ephemeral=True)
         return
       if not member == 0:
         delete_member = client.get_user(int(member))
         if delete_member is None:
-          await interaction.response.send_message("指定されたメンバーが見つかりませんでした。")
+          await interaction.followup.send(content="指定されたメンバーが見つかりませんでした。")
           return
       if not channel == 0:
         delete_channel = client.get_channel(int(channel))
         if delete_channel is None:
-          await interaction.response.send_message("指定されたチャンネルが見つかりませんでした。")
+          await interaction.followup.send(content="指定されたチャンネルが見つかりませんでした。")
           return
         if not isinstance(delete_channel, discord.TextChannel):
-          await interaction.response.send_message("指定されたチャンネルはテキストチャンネルではありません。")
+          await interaction.followup.send(content="指定されたチャンネルはテキストチャンネルではありません。")
           return
       delete_count = 0
       for delete_channel_now in interaction.guild.text_channels:
@@ -132,7 +133,7 @@ async def message_deletercommand(interaction: discord.Interaction, member: int =
       await interaction.followup.send(content=f"全部で{delete_count}個のメッセージを削除しました。実行者は{interaction.user.id}です。")
     except Exception as e:
       er_em = discord.Embed(title="エラー", description=f'```{e}```')
-      await interaction.followup.send(embed=er_em)
+      await interaction.followup.send(content="",embed=er_em)
       return
                   
       
