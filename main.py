@@ -110,10 +110,12 @@ async def message_deletercommand(interaction: discord.Interaction, member: str =
         await interaction.followup.send(content="メンバー、チャンネル、テキストの全てを指定していないため、実行をキャンセルしました。", ephemeral=True)
         return
       if not member == "0":
-        delete_member = client.get_user(int(member))
-        if delete_member is None:
+        try:
+          delete_member = client.fetch_user(int(member))
+        except Exception as e:
           await interaction.followup.send(content="指定されたメンバーが見つかりませんでした。")
           return
+      
       if not channel == "0":
         delete_channel = client.get_channel(int(channel))
         if delete_channel is None:
