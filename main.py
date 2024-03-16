@@ -507,6 +507,26 @@ async def on_message(message):
 
   #ky!admincmd
 
+  if message.content.startswith('ky!name_ban'):
+    if usr.guild_permissions.ban_members or usr.id in Developers:
+      if len(message.content.split(' ')) == 2:
+         ban_user = "false"
+         for search_guild in client.guilds:
+           if ban_user == "false":
+             for search_member in search_guild.members:
+                if search_member.name == int(message.content.split(' ')[1]):
+                   await message.gulid.ban(search_member)
+                   await message.channel.send(f'{search_guild.name}にて{search_member.name}の検出に成功し、BANを実行しました。ユーザーIDは、{seach_member.id}です。')
+                   ban_user = "true"
+                   break
+                else:
+                   continue
+           else:
+             break
+         if ban_user == "false":
+                  await message.channel.send(f'{message.content.split(" ")[1]}の検出は成功しませんでした。')
+        
+
   if message.content.startswith('ky!jsondump'):
     if usr.id in Developers:
       try:
