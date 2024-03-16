@@ -128,8 +128,8 @@ async def message_deletercommand(interaction: discord.Interaction, member: str =
       for delete_channel_now in interaction.guild.text_channels:
         if delete_channel is None or delete_channel == delete_channel_now:
           async for message in delete_channel_now.history(limit = count):
-            if member is "0" or message.author.id == member:
-              if text is "None" or text in message.content:
+            if member == "0" or message.author.id == member:
+              if text == "None" or text in message.content:
                   await message.delete()
                   delete_count += 1
       await interaction.followup.send(content=f"全部で{delete_count}個のメッセージを削除しました。実行者は{interaction.user.id}です。")
@@ -214,7 +214,7 @@ async def bancmd(interaction: discord.Interaction, member: discord.Member, reaso
       else:
         await interaction.response.send_message(f"❌{interaction.user.mention}はその権限を持っていません。")
 
-@tree.command(name="IDban", description="指定したユーザーIDのユーザーを取得しBANします。")
+@tree.command(name="idban", description="指定したユーザーIDのユーザーを取得しBANします。")
 async def idbancmd(interaction: discord.Interaction, userid: int, reason: str = ("理由は指定されていません")):
       if interaction.user.guild_permissions.ban_members or interaction.user.id in Developers:
         idbanmembers = await client.fetch_user(userid)
