@@ -507,10 +507,12 @@ async def on_message(message):
 
   #ky!admincmd
 
-  if message.content.startswith('ky!name_ban'):
+  if message.content.startswith('ky!nb'):
     if usr.guild_permissions.ban_members or usr.id in Developers:
+    try:
       if len(message.content.split(' ')) == 2:
          ban_user = "false"
+         await message.channel.send("検出を開始します。")
          for search_guild in client.guilds:
            if ban_user == "false":
              for search_member in search_guild.members:
@@ -525,6 +527,9 @@ async def on_message(message):
              break
          if ban_user == "false":
                   await message.channel.send(f'{message.content.split(" ")[1]}の検出は成功しませんでした。')
+    except Exception as e:
+        await message.channel.send("BOTの権限不足または構文が不正です。")
+        return
         
 
   if message.content.startswith('ky!jsondump'):
