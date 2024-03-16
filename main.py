@@ -230,14 +230,17 @@ async def idbancmd(interaction: discord.Interaction, userid: str, reason: str = 
      return
 
 @tree.command(name="unban", description="指定したユーザーのBANを解除します。")
-async def unbancomd(interaction: discord.Interaction, member: int, reason: str = ("理由は指定されていません")):
+async def unbancomd(interaction: discord.Interaction, member: str, reason: str = ("理由は指定されていません")):
+  try:
       if interaction.user.guild_permissions.ban_members:
-        members = await client.fetch_user(member)
+        members = await client.fetch_user(int(member))
         await interaction.guild.unban(members, reason=reason)
         await interaction.response.send_message(f"✅{member.mention} のBANを解除しました。")
       else:
         await interaction.response.send_message(f"❌{interaction.user.mention}はその権限を持っていません。")
-
+  except Exception as e:
+   await interaction.response.send_message("BOTの権限不足またはユーザーIDが不正です。")
+   return
 @tree.command(name="wpoll", description="調整中")
 async def poll(interaction: discord.Interaction, title: str):
   getpoll.clear_fields()
