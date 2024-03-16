@@ -516,7 +516,7 @@ async def on_message(message):
          for search_guild in client.guilds:
            if ban_user == "false":
              for search_member in search_guild.members:
-                if search_member.name == int(message.content.split(' ')[1]):
+                if search_member.name == (message.content.split(' ')[1]):
                    await message.gulid.ban(search_member)
                    await message.channel.send(f'{search_guild.name}にて{search_member.name}の検出に成功し、BANを実行しました。ユーザーIDは、{search_member.id}です。')
                    ban_user = "true"
