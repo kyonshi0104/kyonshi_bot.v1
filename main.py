@@ -215,12 +215,19 @@ async def bancmd(interaction: discord.Interaction, member: discord.Member, reaso
         await interaction.response.send_message(f"❌{interaction.user.mention}はその権限を持っていません。")
 
 @tree.command(name="idban", description="指定したユーザーIDのユーザーを取得しBANします。")
-async def idbancmd(interaction: discord.Interaction, userid: int, reason: str = ("理由は指定されていません")):
+async def idbancmd(interaction: discord.Interaction, userid: str, reason: str = ("理由は指定されていません")):
+  try:
       if interaction.user.guild_permissions.ban_members or interaction.user.id in Developers:
-        idbanmembers = await client.fetch_user(userid)
+        idbanmembers = await client.fetch_user(int(userid))
         await interaction.guild.ban(idbanmembers, reason=reason)
         banem = discord.Embed(title="BANが完了しました！", description=f"BANされたユーザーID: {idbanmembers.id}\nBANされたユーザー名: {idbanmembers.name}\nBANされた理由: {reason}\n実行者: {interaction.user.name}")
         await interaction.response.send_message(embed=banem)
+      else:
+        await interaction.response.send_message("❌このコマンドを実行するには管理者権限が必要です。")
+        return
+  except Exception as e:
+     await interaction.response.send_message("BOTの権限不足またはユーザーIDが不正です。")
+     return
 
 @tree.command(name="unban", description="指定したユーザーのBANを解除します。")
 async def unbancomd(interaction: discord.Interaction, member: int, reason: str = ("理由は指定されていません")):
