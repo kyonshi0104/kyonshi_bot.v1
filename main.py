@@ -932,7 +932,7 @@ async def on_message(message):
      await message.channel.send('どうかなさいましたかkyonshi様')
      return
     elif message.author.id in friends:
-     await message.channel.send(f'{message.author.name}だ\nやぁやぁ')
+     await message.channel.send(f'{message.author.display_name}だ\nやぁやぁ')
     else:
      await message.channel.send("なんすか")
 
