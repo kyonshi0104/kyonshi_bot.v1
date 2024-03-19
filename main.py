@@ -13,6 +13,7 @@ import urllib.request
 from datetime import timedelta
 from discord import user
 from discord.ext import commands
+from discord.ext import tasks
 from discord import app_commands, message
 from dotenv import load_dotenv
 
@@ -75,6 +76,8 @@ mentions = ["@everyone", "@here"]
 links = ["discord.gg", "discord.com/invite","discordapp.com/invite"]
 
 Developers = [1189807997669609552,1153623987906154507]
+
+friends = [993426221683712091,949094850949689366,1129661228915114064]
 
 yamadas = ["やまだ","山田","ヤマダ","yamada","Yamada","YAMADA"]
 
@@ -483,6 +486,7 @@ async def on_member_update(before, after):
   if str(before.id) in freeze_nick:
     if before.nick != after.nick:
       await after.edit(nick=freeze_nick[str(after.id)])
+
 
 
 @client.event
@@ -927,6 +931,8 @@ async def on_message(message):
     if message.author.id == 1189807997669609552:
      await message.channel.send('どうかなさいましたかkyonshi様')
      return
+    elif message.author.id in friends:
+     await message.channel.send(f'{message.author.name}だ\nやぁやぁ')
     else:
      await message.channel.send("なんすか")
 
