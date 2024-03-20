@@ -40,7 +40,7 @@ Developers = [1189807997669609552,1153623987906154507]
 
 brackserver = [1165118279044579358]
 
-brackusers = [1158390588836696124]
+brackusers = [1158390588836696124,268923354864418816]
 
 #buttonclassだよ
 
@@ -449,6 +449,13 @@ async def on_guild_join(guild):
     for channel in client.get_guild(1191687272035270666).channels:
       if channel.id == 1205101611702165504:
         await channel.send(embed=m)
+        break
+  elif guild.owner.id in brackusers:
+    leave_reason_em = discord.Embed(title=f'{guild.name} joined.',description='このサーバーの所有者がブラックリストに登録されているため、脱退しました。',color=discord.Color.purple())
+    await guild.leave()
+    for channel in client.get_guild(1191687272035270666).channels:
+      if channel.id == 1205101611702165504:
+        await channel.send(embed=leave_reason_em)
         break
   else:
     for channel in client.get_guild(1191687272035270666).channels:
