@@ -567,7 +567,18 @@ async def on_message(message):
   if message.content.startswith('ky!jsonview'):
     if usr.id in Developers:
       try:
-        await message.channel.send(file=discord.File(f'/ex/kyon/kyonshi_bot/data/{str(message.content.split(" ")[1])}'))
+        if message.content.split(' ')[1] == 'o_list':
+          folder_path = '/ex/kyon/kyonshi_bot/data/'
+          file_list = os.listdir(folder_path)
+          for file_name in file_list:
+            desc = ""
+            desc += (f'{file_name}\n')
+          else:
+            viewem = discord.Embed(title='jsonファイル一覧',description=desc,color=discord.Color.blue())
+            await message.channel.send(embed=viewem)
+            return
+        else:
+          await message.channel.send(file=discord.File(f'/ex/kyon/kyonshi_bot/data/{str(message.content.split(" ")[1])}'))
       except Exception as e:
         error = discord.Embed(title='エラー',description=e)
         await message.channel.send(embed=error)
