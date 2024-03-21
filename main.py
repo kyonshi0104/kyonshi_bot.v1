@@ -50,8 +50,6 @@ class DeleteButton(discord.ui.Button):
     await interaction.response.send_modal(ModalName())
 
 #helpコマンドのembed
-  
-help_em_1 = discord.Embed(title="Kyonshi_bot"
 
 #words一覧
 
