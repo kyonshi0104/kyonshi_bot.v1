@@ -42,14 +42,16 @@ brackserver = [1165118279044579358]
 
 brackusers = [1158390588836696124,268923354864418816]
 
-#buttonclassだよ
-
+#classだよ
 
 class DeleteButton(discord.ui.Button):
 
   async def callback(self, interaction: discord.Interaction):
     await interaction.response.send_modal(ModalName())
 
+#helpコマンドのembed
+  
+help_em_1 = discord.Embed(title="Kyonshi_bot"
 
 #words一覧
 
@@ -518,31 +520,6 @@ async def on_message(message):
 
   #ky!admincmd
 
-  if message.content.startswith('ky!nb'):
-    if usr.guild_permissions.ban_members or usr.id in Developers:
-     try:
-       if len(message.content.split(' ')) == 2:
-         ban_user = "false"
-         await message.channel.send("検出を開始します。")
-         for search_guild in client.guilds:
-           if ban_user == "false":
-             for search_member in search_guild.members:
-                if search_member.name == (message.content.split(' ')[1]):
-                   await message.guild.ban(search_member)
-                   await message.channel.send(f'{search_guild.name}にて{search_member.name}の検出に成功し、BANを実行しました。ユーザーIDは、{search_member.id}です。')
-                   ban_user = "true"
-                   break
-                else:
-                   continue
-           else:
-             break
-         if ban_user == "false":
-                  await message.channel.send(f'{message.content.split(" ")[1]}の検出は成功しませんでした。')
-     except Exception as e:
-         await message.channel.send(f"BOTの権限不足または構文が不正です。\n```{e}```")
-         return
-        
-
   if message.content.startswith('ky!jsondump'):
     if usr.id in Developers:
       try:
@@ -845,6 +822,30 @@ async def on_message(message):
 
   #ky!globalcommand
 
+  if message.content.startswith('ky!nb'):
+    if usr.guild_permissions.ban_members or usr.id in Developers:
+     try:
+       if len(message.content.split(' ')) == 2:
+         ban_user = "false"
+         await message.channel.send("検出を開始します。")
+         for search_guild in client.guilds:
+           if ban_user == "false":
+             for search_member in search_guild.members:
+                if search_member.name == (message.content.split(' ')[1]):
+                   await message.guild.ban(search_member)
+                   await message.channel.send(f'{search_guild.name}にて{search_member.name}の検出に成功し、BANを実行しました。ユーザーIDは、{search_member.id}です。')
+                   ban_user = "true"
+                   break
+                else:
+                   continue
+           else:
+             break
+         if ban_user == "false":
+                  await message.channel.send(f'{message.content.split(" ")[1]}の検出は成功しませんでした。')
+     except Exception as e:
+         await message.channel.send(f"BOTの権限不足または構文が不正です。\n```{e}```")
+         return
+
   if message.content.startswith('ky!events'):
     today = ('false')
     time_data = ('null')
@@ -942,6 +943,17 @@ async def on_message(message):
       mik = (F'あなたの運勢は{omikuji[ms]}です。良い一日を！')
       mikuji = discord.Embed(title='おみくじ', description=mik, color=discord.Color.blue())
     await message.channel.send(embed=mikuji)
+
+  if message.content == 'ky!mg' or 'ky!meigen':
+     url = "https://meigen.doodlenote.net/api/json.php"
+     response = requests.get(url)
+     get_json = response.text.replace("[", "").replace("]","")
+     data = json.loads(get_json)
+     meigen = data['meigen']
+     author = data['auther']
+     meigenem = discord.Embed(title='名言',description=meigen,color=discord.Color.blue())
+     meigenem.set_footer(text=f'--{author}')
+     await message.channel.send(embed=meigenem)
 
   #messageに反応する奴らだよ
 
