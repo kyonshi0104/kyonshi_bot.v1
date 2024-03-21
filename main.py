@@ -942,7 +942,7 @@ async def on_message(message):
       mikuji = discord.Embed(title='おみくじ', description=mik, color=discord.Color.blue())
     await message.channel.send(embed=mikuji)
 
-  if message.content.startswith('ky!omikujasagrewgwagfrgfd'):
+  if message.content.startswith('ky!meigen'):
      url = "https://meigen.doodlenote.net/api/json.php"
      response = requests.get(url)
      get_json = response.text.replace("[", "").replace("]","")
