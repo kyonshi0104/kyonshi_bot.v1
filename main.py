@@ -820,6 +820,17 @@ async def on_message(message):
 
   #ky!globalcommand
 
+  if message.content.startswith('ky!ban_list'):
+   if message.author.id in Developers or message.author.guild_permissions.ban_users:
+     ban_list = await message.guild.bans()
+     ban_list_str = ""
+     for ban_entry in ban_list:
+       ban_list_str += f"{ban_entry.user.name}#{ban_entry.user.discriminator},{ban_entry.user.id}\n"
+     if ban_list_str == "":
+       ban_list_str = "BANされたユーザーはいません"
+     ban_list_embed = discord.Embed(title="BANされたユーザー一覧",description=ban_list_str)
+     await message.channel.send(embed=ban_list_embed)
+
   if message.content.startswith('ky!nb'):
     if usr.guild_permissions.ban_members or usr.id in Developers:
      try:
@@ -935,10 +946,10 @@ async def on_message(message):
     else:
       ms = random.randint(0, 6)
     if len(message.content.split(' ')) == 2:
-      mik = (f'{message.content.split(" ")[1]}さんはおみくじを引いてる暇があったら学校行ったらどうですか？')
+      mik = (f'{message.content.split(" ")[1]}さんの運勢は大吉です。この結果が何であれ、あなたが今このメッセージを読めているなら十分偉いです。')
       mikuji = discord.Embed(title='おみくじ', description=mik, color=discord.Color.blue())
     else:
-      mik = (F'あなたの運勢は{omikuji[ms]}です。良い一日を！')
+      mik = (F'あなたの運勢は{omikuji[ms]}です。この結果が何であれ、あなたが今このメッセージを読めて、もしくは聞けているのなら、良い日でありますように')
       mikuji = discord.Embed(title='おみくじ', description=mik, color=discord.Color.blue())
     await message.channel.send(embed=mikuji)
 
