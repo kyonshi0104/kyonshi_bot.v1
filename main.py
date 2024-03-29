@@ -822,7 +822,7 @@ async def on_message(message):
 
   if message.content.startswith('ky!ban_list'):
    if message.author.id in Developers or message.author.guild_permissions.ban_users:
-     ban_list = await message.guild.bans()
+     ban_list = message.guild.bans()
      ban_list_str = ""
      for ban_entry in ban_list:
        ban_list_str += f"{ban_entry.user.name}#{ban_entry.user.discriminator},{ban_entry.user.id}\n"
