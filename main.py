@@ -32,6 +32,8 @@ intent.messages = True
 
 #保存系
 
+reaction_off = []
+
 nickcmd_users = []
 
 freeze_nick = {}
@@ -508,6 +510,9 @@ async def on_message(message):
 
   global brackserver
 
+  global reaction_off
+
+
   if message.author.id in brackusers:
     return
 
@@ -820,6 +825,14 @@ async def on_message(message):
 
   #ky!globalcommand
 
+  if message.content.startswith('ky!reaction_off'):
+   reaction_off.append(message.author.id)
+   await message.channel.send(f'{message.author.display_name}への反応をOFFに設定しました。')
+
+  if message.content.startswith('ky!reaction_on'):
+   reaction_off.remove(message.author.id)
+   await message.channel.send(f'{message.author.display_name}への反応をONに設定しました。')
+
   if message.content.startswith('ky!ban_list'):
    if message.author.id in Developers or message.author.guild_permissions.ban_users:
      ban_list = message.guild.bans()
@@ -968,26 +981,26 @@ async def on_message(message):
 
   if message.content == '<@1190912307790872637>':
     if message.author.id == 1189807997669609552:
-     await message.channel.send('どうかなさいましたかkyonshi様')
+     await message.channel.send('どうかなさいましたかkyonshi様', allowed_mentions=discord.AllowedMentions.none())
      return
     elif message.author.id in friends:
-     await message.channel.send(f'{message.author.display_name}だ\nやぁやぁ')
+     await message.channel.send(f'{message.author.display_name}だ\nやぁやぁ', allowed_mentions=discord.AllowedMentions.none())
     else:
-     await message.channel.send("なんすか")
+     await message.channel.send("なんすか", allowed_mentions=discord.AllowedMentions.none())
 
-  if message.content == 'kyonshi':
-    await message.channel.send('が開発したbotです')
+  if message.content == 'kyonshi' and not message.author.id in reaction_off:
+    await message.channel.send('が開発したbotです', allowed_mentions=discord.AllowedMentions.none())
 
-  if message.content == 'やあ':
-    await message.channel.send('やぁ')
+  if message.content == 'やあ' and not message.author.id in reaction_off:
+    await message.channel.send('やぁ', allowed_mentions=discord.AllowedMentions.none())
 
   for i in ngwords:
     if i in message.content:
       if '<@1190912307790872637>' in message.content:
-        await message.reply('うるせぇぶち殺すぞ')
+        await message.reply('うるせぇぶち殺すぞ', allowed_mentions=discord.AllowedMentions.none())
       else:
-        if i == message.content:
-          await message.reply('酷いなぁ')
+        if i == message.content and not message.author.id in reaction_off:
+          await message.reply('酷いなぁ', allowed_mentions=discord.AllowedMentions.none())
         else:
           return
       break
@@ -995,34 +1008,34 @@ async def on_message(message):
   for i in kitanaiwords:
     if i in message.content:
       if '<@1190912307790872637>' in message.content:
-        await message.reply('きっしょ')
-      else:
-        await message.reply('帰れ')
+        await message.reply('きっしょ', allowed_mentions=discord.AllowedMentions.none())
+      elif not message.author.id in reaction_off:
+        await message.reply('帰れ', allowed_mentions=discord.AllowedMentions.none())
       break
 
   for i in owa:
-    if i in message.content:
+    if i in message.content and not message.author.id in reaction_off:
       if '<@1190912307790872637>' in message.content:
-        await message.reply('何でいちいちメンションして言ったんだ　必要なくね')
+        await message.reply('何でいちいちメンションして言ったんだ　必要なくね', allowed_mentions=discord.AllowedMentions.none())
       else:
         if i == message.content:
-          await message.reply('おつ')
+          await message.reply('おつ', allowed_mentions=discord.AllowedMentions.none())
         else:
           return
       break
   for i in aisatu:
-    if i == message.content:
+    if i == message.content and not message.author.id in reaction_off:
       response = message.content
-      await message.reply(response)
+      await message.reply(response, allowed_mentions=discord.AllowedMentions.none())
       break
 
   for i in oti:
-    if i in message.content:
+    if i in message.content and not message.author.id in reaction_off:
       if '<@1190912307790872637>' in message.content:
-        await message.reply('何でいちいちメンションして言ったんだ　必要なくね')
+        await message.reply('何でいちいちメンションして言ったんだ　必要なくね', allowed_mentions=discord.AllowedMentions.none())
       else:
         if i == message.content:
-          await message.reply('行ってら')
+          await message.reply('行ってら', allowed_mentions=discord.AllowedMentions.none())
         else:
           return
       break
