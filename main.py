@@ -87,6 +87,8 @@ now = datetime.datetime.now(datetime.timezone(datetime.timedelta(hours=9)))
 
 getpoll = discord.Embed()
 
+#jsonの読み込みだよ
+
 
 class ModalName(discord.ui.Modal):
   input = discord.ui.TextInput(label="CONTEXT",
@@ -132,11 +134,12 @@ async def message_deletercommand(interaction: discord.Interaction, member: str =
       delete_count = 0
       for delete_channel_now in interaction.guild.text_channels:
         if delete_channel is None or delete_channel == delete_channel_now:
-          async for message in delete_channel_now.history(limit = count):
-            if member == "0" or message.author.id == member:
-              if text == "None" or text in message.content:
-                  await message.delete()
-                  delete_count += 1
+          if isinstance(delete_channel_now, discord.TextChannel) and delete_channel_now.permissions_for(interaction.guild.me).read_messages:
+            async for message in delete_channel_now.history(limit = count):
+              if member == "0" or message.author.id == member:
+                if text == "None" or text in message.content:
+                    await message.delete()
+                    delete_count += 1
       await interaction.followup.send(content=f"全部で{delete_count}個のメッセージを削除しました。実行者は{interaction.user.id}です。")
     except Exception as e:
       er_em = discord.Embed(title="エラー", description=f'```{e}```')
@@ -979,6 +982,10 @@ async def on_message(message):
 
   #messageに反応する奴らだよ
 
+  """if message.content.startswith('ky!'):
+    if message.author.id 
+     await"""
+  
   if message.content == '<@1190912307790872637>':
     if message.author.id == 1189807997669609552:
      await message.channel.send('どうかなさいましたかkyonshi様', allowed_mentions=discord.AllowedMentions.none())
