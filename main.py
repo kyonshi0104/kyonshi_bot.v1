@@ -134,7 +134,7 @@ async def message_deletercommand(interaction: discord.Interaction, member: str =
       delete_count = 0
       for delete_channel_now in interaction.guild.text_channels:
         if delete_channel is None or delete_channel == delete_channel_now:
-          if isinstance(delete_channel_now, discord.TextChannel) and delete_channel_now.permissions_for(interaction.guild.me).read_messages:
+          if delete_channel_now.permissions_for(interaction.guild.me).read_messages:
             async for message in delete_channel_now.history(limit = count):
               if member == "0" or message.author.id == member:
                 if text == "None" or text in message.content:
