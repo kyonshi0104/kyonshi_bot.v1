@@ -110,7 +110,7 @@ async def message_deletercommand(interaction: discord.Interaction, member: str =
     try: 
       delete_channel = None
       await interaction.response.defer()
-      if not interaction.user.guild_permissions.manage_channels:
+      if not interaction.user.guild_permissions.manage_channels or interaction.user.id not in Developers:
         await interaction.followup.send(content="このコマンドはチャンネル管理権限の所有者のみ発動できるように設定されています。", ephemeral=True)
         return
       if member == "0" and channel == "0" and text == "None":
