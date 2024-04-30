@@ -118,7 +118,7 @@ async def message_deletercommand(interaction: discord.Interaction, member: str =
         return
       if not member == "0":
         try:
-          delete_member = client.fetch_user(int(member))
+          delete_member = await client.fetch_user(int(member))
         except Exception as e:
           await interaction.followup.send(content="指定されたメンバーが見つかりませんでした。")
           return
@@ -136,7 +136,7 @@ async def message_deletercommand(interaction: discord.Interaction, member: str =
         if delete_channel is None or delete_channel == delete_channel_now:
           if delete_channel_now.permissions_for(interaction.guild.me).read_messages:
             async for message in delete_channel_now.history(limit = count):
-              if member == "0" or message.author.id == member:
+              if member == "0" or message.author.id == int(member):
                 if text == "None" or text in message.content:
                     await message.delete()
                     delete_count += 1
