@@ -63,7 +63,7 @@ GLOBALCHAT = ("kyonshi-gc")
 
 ngwords = ['010509','死ね','カス','マヌケ','間抜け','馬鹿','ばか','バカ','ﾀﾋね']
 
-kitanaiwords = ['010409','4545','1919','114514','いぐいぐ','///','うんち','うんこ','はなくそ','ちんちん','まんこ','ちんぽ','ちんこ','セックス','sex','Sex','sEx','seX','seX','チンコ','ﾁﾝｺ','ウンコ','ｳﾝｺ']
+kitanaiwords = ['010409','4545','1919','114514','いぐいぐ','///','うんち','うんこ','はなくそ','ちんちん','まんこ','ちんぽ','ちんこ','セックス','sex','Sex','sEx','seX','seX','チンコ','ﾁﾝｺ','ウンコ','ｳﾝｺ','チンチン']
 
 aisatu = ['おはよう', 'おやすみ', 'こんばんは', 'やぁ!', 'よぉ!', 'よお!', 'よう!', 'よぅ!', 'やぁ！', 'やあ！','よぉ！', 'よお！', 'よう！', 'よぅ！', 'おはよう!', 'おは', 'こん','おはよ','こん','こんちゃ','よっ','おは！','おは!']
 
@@ -525,6 +525,20 @@ async def on_message(message):
   usr = message.author
 
   #ky!admincmd
+  if message.content.startswith('ky!debug_emergency'):
+    if usr.id == 1189807997669609552:
+      await message.channel.send('緊急用のコマンドが実行されました。')
+      emergency_embed = discord.Embed(title='DEBUG EMBED',description="操作を指定してください。/ Specify the operation.\nA,BOT FORCED END,C,DENY ACCESS FROM ALL USERS,D,Cancel execution,E,spam blocker" ,color=discord.Color.red() )
+      await message.channel.send(embed=emergency_embed)
+    else:
+      await message.channel.send('このコマンドは製作者のみが実行できます。')
+      
+
+  if message.content.startswith('ky!debug_reaction_all_off'):
+    if usr.id in Developers:
+      member_ids = [member.id for member in message.guild.members]
+      reaction_off.extend(member_ids)
+      await message.channel.send(f'{message.guild.name}内の全てのメンバーのリアクション設定をOFFに設定しました。')
 
   if message.content.startswith('ky!jsondump'):
     if usr.id in Developers:
