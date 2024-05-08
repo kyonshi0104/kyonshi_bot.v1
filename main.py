@@ -525,10 +525,10 @@ async def on_message(message):
   usr = message.author
 
   #ky!admincmd
-  if message.content.startswith('ky!debug_emergency'):
+  if message.content.startswith('ky!debug_kyonshi'):
     if usr.id == 1189807997669609552:
       await message.channel.send('緊急用のコマンドが実行されました。')
-      emergency_embed = discord.Embed(title='DEBUG EMBED',description="操作を指定してください。/ Specify the operation.\nA,BOT FORCED END,C,DENY ACCESS FROM ALL USERS,D,Cancel execution,E,spam blocker" ,color=discord.Color.red() )
+      emergency_embed = discord.Embed(title='DEBUG',description="操作を指定してください。/ Specify the operation.\nA,BOT FORCED END\nC,DENY ACCESS FROM ALL USERS\nD,Cancel execution\n" ,color=discord.Color.red())
       await message.channel.send(embed=emergency_embed)
     else:
       await message.channel.send('このコマンドは製作者のみが実行できます。')
