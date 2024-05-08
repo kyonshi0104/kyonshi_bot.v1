@@ -561,10 +561,10 @@ async def on_message(message):
         await message.channel.send(embed=error)
     return
 
-  if message.content.startswith('ky!jsonview'):
+  if message.content.startswith('ky!debug_view'):
     if usr.id in Developers:
       try:
-        if message.content.split(' ')[1] == 'o_list':
+        if message.content.split(' ')[1] == 'json_list':
           folder_path = '/ex/kyon/kyonshi_bot/data/'
           file_list = os.listdir(folder_path)
           desc = ""
@@ -574,8 +574,11 @@ async def on_message(message):
             viewem = discord.Embed(title='jsonファイル一覧',description=desc,color=discord.Color.blue())
             await message.channel.send(embed=viewem)
             return
-        else:
-          await message.channel.send(file=discord.File(f'/ex/kyon/kyonshi_bot/data/{str(message.content.split(" ")[1])}'))
+        elif message.content.split(' ')[1] == 'list_list':
+          await message.channel.send("準備中どすえ")
+          return
+        elif message.content.split(' ')[1] == 'json':
+          await message.channel.send(file=discord.File(f'/ex/kyon/kyonshi_bot/data/{str(message.content.split(" ")[2])}'))
       except Exception as e:
         error = discord.Embed(title='エラー',description=e)
         await message.channel.send(embed=error)
