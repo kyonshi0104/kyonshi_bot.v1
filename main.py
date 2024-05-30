@@ -999,6 +999,10 @@ async def on_message(message):
 
   #messageに反応する奴らだよ
 
+  if message.guild.id == 1115124542898176010:
+    if not any(role.id == 1223459815414693899 for role in message.author.roles):
+      return
+
   """if message.content.startswith('ky!'):
     if message.author.id 
      await"""
