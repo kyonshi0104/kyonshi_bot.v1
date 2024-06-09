@@ -307,6 +307,8 @@ async def get_time(interaction: discord.Interaction):
 @tree.command(name='say', description='指定した内容を送信します')
 async def sey(interaction: discord.Interaction, text: str):
   if interaction.user.id in say_blockeduser:
+    await interaction.response.send_message("このコマンドは使用できないどすえ。", ephemeral=True)
+    return
   if ' '.join(say) in text:
     await interaction.response.send_message("それは言わせないよ", ephemeral=True)
     await interaction.channel.send(
@@ -517,6 +519,8 @@ async def on_message(message):
   global brackserver
 
   global reaction_off
+
+  global say_blockeduser
 
   if message.author.id in brackusers:
     return
