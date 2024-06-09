@@ -83,6 +83,8 @@ friends = [993426221683712091,949094850949689366,1129661228915114064]
 
 yamadas = ["やまだ","山田","ヤマダ","yamada","Yamada","YAMADA"]
 
+say_blockeduser = [1158401352800686120,1025061937748385864]
+
 now = datetime.datetime.now(datetime.timezone(datetime.timedelta(hours=9)))
 
 getpoll = discord.Embed()
@@ -304,6 +306,7 @@ async def get_time(interaction: discord.Interaction):
 
 @tree.command(name='say', description='指定した内容を送信します')
 async def sey(interaction: discord.Interaction, text: str):
+  if interaction.user.id in say_blockeduser:
   if ' '.join(say) in text:
     await interaction.response.send_message("それは言わせないよ", ephemeral=True)
     await interaction.channel.send(
@@ -515,7 +518,6 @@ async def on_message(message):
 
   global reaction_off
 
-
   if message.author.id in brackusers:
     return
 
@@ -612,6 +614,19 @@ async def on_message(message):
       else:
         bsem = discord.Embed(title="ブラックリスト一覧", description=bserembed, color=discord.Color.red())
         await message.channel.send(embed=bsem)
+    else:
+      await message.channel.send('そのコマンドを実行する権限がありません。')
+      return
+
+  if message.content.startswith('ky!say_blockedusers'):
+    if usr.id in Developers:
+      bues = ("")
+      for bue in say_blockeduser:
+        devuser = await client.fetch_user(bue)
+        bues += (f"{devuser}\n")
+      else:
+        devem = discord.Embed(title="ブラックリスト", description=bues, color=discord.Color.red())
+        await message.channel.send(embed=devem)
     else:
       await message.channel.send('そのコマンドを実行する権限がありません。')
       return
