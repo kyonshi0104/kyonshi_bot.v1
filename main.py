@@ -32,6 +32,8 @@ intent.messages = True
 
 #保存系
 
+restriction = {}
+
 reaction_off = []
 
 nickcmd_users = []
@@ -510,6 +512,8 @@ async def on_member_update(before, after):
 async def on_message(message):
   global brackusers
 
+  global restriction
+
   global nickcmd_users
 
   global freeze_nick
@@ -676,6 +680,50 @@ async def on_message(message):
       await message.channel.send('このコマンドは開発者専用です。')
       return
 
+  if message.content.startswith('ky!restriction+'):
+    if not usr.id in Developers:
+      return
+    if len(message.content.split(' ')) == 1:
+      await message.channel.send('ユーザーを指定してください。')
+      return
+    else:
+      user = message.content.split(' ')[1]
+      cmd = f"ky!{message.content.split(' ')[2]}"
+      if user in restriction:
+        restriction[user] = restriction[user] + (cmd,)
+      else:
+        restriction[user] = (cmd,)
+      await message.channel.send(f'{user}に{cmd}の制限を追加しました。')
+      return
+
+  if message.content.startswith('ky!restriction-'):
+    if not usr.id in Developers:
+      return
+    if len(message.content.split(' ')) == 1:
+      await message.channel.send('ユーザーを指定してください。')
+      return
+    else:
+      user = message.content.split(' ')[1]
+      cmd = f"ky!{message.content.split(' ')[2]}"
+      if user in restriction:
+        l = list(restriction[user])
+        l.remove(cmd)
+        restriction[user] = tuple(l)
+        await message.channel.send(f'{user}に対しての{cmd}の制限を解除しました。')
+        return
+
+  if message.content.startswith('ky!restrictions'):
+    ls = ("")
+    if not usr.id in Developers:
+      return
+    for user in restriction:
+      devuser = await client.fetch_user(user)
+      ls += (f"{devuser} : {restriction[user]}\n")
+    else:
+      devem = discord.Embed(title="制限ユーザー一覧", description=ls, color=discord.Color.orange())
+      await message.channel.send(embed=devem)
+      
+  
   if message.content.startswith('ky!brackusers'):
     if usr.id in Developers:
       bues = ("")
