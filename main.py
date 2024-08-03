@@ -532,6 +532,12 @@ async def on_message(message):
   if message.author.bot:
     return
 
+  #restriction
+  if message.author.id in restriction:
+    if message.content in restriction[message.author.id]:
+      await message.channel.send(f"{message.author.mention} このコマンドの使用は制限されています。")
+      return
+
   usr = message.author
 
   #ky!admincmd
