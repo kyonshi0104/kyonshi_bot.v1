@@ -676,6 +676,8 @@ async def on_message(message):
         elif message.content.split(' ')[1] == 'list_list':
           await message.channel.send("準備中どすえ")
           return
+        elif message.content.split(' ')[1] == 'hs':
+          await message.channel.send(getattr(globals(), message.content.split[2], 'Not found'))
         elif message.content.split(' ')[1] == 'json':
           await message.channel.send(file=discord.File(
               f'/ex/kyon/kyonshi_bot/data/{str(message.content.split(" ")[2])}'
