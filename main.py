@@ -623,12 +623,14 @@ async def on_message(message):
 
   if message.channel.id in airest_channel:
     headers = {"Content-Type": "application/json"}
-    payload = {
-        "model": "airest-2.5-turbo",
-        "message": message.content.split(' ')[1]
-    }
+    payload = {"model": "airest-2.5-turbo","message": message.content.split(' ')[1]}
     response = requests.post("https://api-airest.onrender.com/chat",headers=headers,json=payload)
-    await message.reply(response["message"]["content"])
+    await message.reply(response.json()["message"]["content"])
+  elif message.content.startswith('ky!airest'):
+    headers = {"Content-Type": "application/json"}
+    payload = {"model": "airest-2.5-turbo","message": message.content.split(' ')[1]}
+    response = requests.post("https://api-airest.onrender.com/chat",headers=headers,json=payload)
+    await message.channel.send(response.json()["message"]["content"])
 
   if message.content.startswith('ky!airest+'):
     airest_channel.append(message.channel.id)
@@ -637,17 +639,6 @@ async def on_message(message):
   if message.content.startswith('ky!airest-'):
     airest_channel.remove(message.channel.id)
     await message.channel.send('おーのーきょんし')
-
-  if message.content.startswith('ky!airest'):
-    headers = {"Content-Type": "application/json"}
-    payload = {
-        "model": "airest-2.5-turbo",
-        "message": message.content.split(' ')[1]
-    }
-    response = requests.post("https://api-airest.onrender.com/chat",
-                             headers=headers,
-                             json=payload)
-    await message.channel.send(response["message"]["content"])
 
   #ky!admincmd
   if message.content.startswith('ky!debug_kyonshi'):
