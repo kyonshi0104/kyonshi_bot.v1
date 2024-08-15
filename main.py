@@ -100,6 +100,8 @@ yamadas = ["やまだ", "山田", "ヤマダ", "yamada", "Yamada", "YAMADA"]
 
 say_blockeduser = [1158401352800686120, 1025061937748385864]
 
+airest_channel = []
+
 now = datetime.datetime.now(datetime.timezone(datetime.timedelta(hours=9)))
 
 getpoll = discord.Embed()
@@ -602,6 +604,8 @@ async def on_message(message):
 
   global say_blockeduser
 
+  global airest_channel
+
   if message.author.id in brackusers:
     return
 
@@ -616,6 +620,34 @@ async def on_message(message):
       return
 
   usr = message.author
+
+  if message.channel.id in airest_channel:
+    headers = {"Content-Type": "application/json"}
+    payload = {
+        "model": "airest-2.5-turbo",
+        "message": message.content.split(' ')[1]
+    }
+    response = requests.post("https://api-airest.onrender.com/chat",headers=headers,json=payload)
+    await message.reply(response["message"]["content"])
+
+  if message.content.startswith('ky!airest+'):
+    airest_channel.append(message.channel.id)
+    await message.channel.send('おけけけけけけけ')
+
+  if message.content.startswith('ky!airest-'):
+    airest_channel.remove(message.channel.id)
+    await message.channel.send('おーのーきょんし')
+
+  if message.content.startswith('ky!airest'):
+    headers = {"Content-Type": "application/json"}
+    payload = {
+        "model": "airest-2.5-turbo",
+        "message": message.content.split(' ')[1]
+    }
+    response = requests.post("https://api-airest.onrender.com/chat",
+                             headers=headers,
+                             json=payload)
+    await message.channel.send(response["message"]["content"])
 
   #ky!admincmd
   if message.content.startswith('ky!debug_kyonshi'):
@@ -677,7 +709,8 @@ async def on_message(message):
           await message.channel.send("準備中どすえ")
           return
         elif message.content.split(' ')[1] == 'hs':
-          await message.channel.send(getattr(globals(), message.content.split[2], 'Not found'))
+          await message.channel.send(
+              getattr(globals(), message.content.split[2], 'Not found'))
         elif message.content.split(' ')[1] == 'json':
           await message.channel.send(file=discord.File(
               f'/ex/kyon/kyonshi_bot/data/{str(message.content.split(" ")[2])}'
