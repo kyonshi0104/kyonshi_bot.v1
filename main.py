@@ -631,7 +631,7 @@ async def on_message(message):
         airest_m = discord.Embed(
             title='airest',
             description=
-            (f"message```{message.content.split(' ')[1]}```response```{response}```"
+            (f"message```{message.content.split(' ')[1]}```response```{response.json()["message"]["content"]}```"
              ),
             color=discord.Color.blue())
         await channel.send(embed=airest_m)
@@ -645,7 +645,7 @@ async def on_message(message):
         airest_m = discord.Embed(
             title='airest',
             description=
-            (f"message```{message.content.split(' ')[1]}```response```{response}```"
+            (f"message```{message.content.split(' ')[1]}```response```{response.json()["message"]["content"]}```"
              ),
             color=discord.Color.blue())
         await channel.send(embed=airest_m)
