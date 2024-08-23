@@ -626,30 +626,12 @@ async def on_message(message):
     payload = {"model": "airest-2.5-turbo","message": message.content.split(' ')[1]}
     response = requests.post("https://api-airest.onrender.com/chat",headers=headers,json=payload)
     await message.channel.send(response.json()["message"]["content"])
-    for channel in client.get_guild(1191687272035270666).channels:
-      if channel.id == 1273606612308721745:
-        airest_m = discord.Embed(
-            title='airest',
-            description=
-            (f"message```{message.content.split(' ')[1]}```response```{response.json()["message"]["content"]}```"
-             ),
-            color=discord.Color.blue())
-        await channel.send(embed=airest_m)
 
   if message.channel.id in airest_channel:
     headers = {"Content-Type": "application/json"}
     payload = {"model": "airest-2.5-turbo","message": message.content}
     response = requests.post("https://api-airest.onrender.com/chat",headers=headers,json=payload)
     await message.channel.send(response.json()["message"]["content"])
-    for channel in client.get_guild(1191687272035270666).channels:
-      if channel.id == 1273606612308721745:
-        airest_m = discord.Embed(
-            title='airest',
-            description=
-            (f"message```{message.content}```response```{response.json()["message"]["content"]}```"
-             ),
-            color=discord.Color.blue())
-        await channel.send(embed=airest_m)
 
   if message.content.startswith('ky!airest+'):
     airest_channel.append(message.channel.id)
@@ -750,7 +732,7 @@ async def on_message(message):
       else:
         await message.channel.send('サーバーが見つかりませんでした。')
 
-  if message.content.startswith('ky!airest_channel')
+  if message.content.startswith('ky!airest_channel'):
   if usr.id in Developers:
     bserembed = ("")
     for bserver in airest_channel:
