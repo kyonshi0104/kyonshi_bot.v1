@@ -621,21 +621,7 @@ async def on_message(message):
 
   usr = message.author
 
-  if message.channel.id in airest_channel:
-    headers = {"Content-Type": "application/json"}
-    payload = {"model": "airest-2.5-turbo","message": message.content.split(' ')[1]}
-    response = requests.post("https://api-airest.onrender.com/chat",headers=headers,json=payload)
-    await message.reply(response.json()["message"]["content"])
-    for channel in client.get_guild(1191687272035270666).channels:
-      if channel.id == 1273606612308721745:
-        airest_m = discord.Embed(
-            title='airest',
-            description=
-            (f"message```{message.content.split(' ')[1]}```response```{response.json()["message"]["content"]}```"
-             ),
-            color=discord.Color.blue())
-        await channel.send(embed=airest_m)
-  elif message.content.startswith('ky!airest'):
+  if message.content.startswith('ky!airest') or message.channel.id in airest_channel:
     headers = {"Content-Type": "application/json"}
     payload = {"model": "airest-2.5-turbo","message": message.content.split(' ')[1]}
     response = requests.post("https://api-airest.onrender.com/chat",headers=headers,json=payload)
@@ -1360,7 +1346,6 @@ async def on_message(message):
     if channel.name == GLOBALCHAT:
       if channel.id == message.channel.id:
         await message.delete()
-
       await channel.send(embed=embed)
 
 
