@@ -621,7 +621,7 @@ async def on_message(message):
 
   usr = message.author
 
-  if message.content.startswith('ky!airest') or message.channel.id in airest_channel:
+  if message.content.startswith('ky!airest ') or message.channel.id in airest_channel:
     headers = {"Content-Type": "application/json"}
     payload = {"model": "airest-2.5-turbo","message": message.content.split(' ')[1]}
     response = requests.post("https://api-airest.onrender.com/chat",headers=headers,json=payload)
