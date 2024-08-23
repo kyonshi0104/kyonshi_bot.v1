@@ -733,11 +733,11 @@ async def on_message(message):
         await message.channel.send('サーバーが見つかりませんでした。')
 
   if message.content.startswith('ky!airest_channel'):
-  if usr.id in Developers:
-    bserembed = ("")
-    for bserver in airest_channel:
-      bservers = client.get_guild(bserver)
-      bserembed += (f"{bserver}\n")
+    if usr.id in Developers:
+      bserembed = ("")
+      for bserver in airest_channel:
+        bservers = client.get_guild(bserver)
+        bserembed += (f"{bserver}\n")
     else:
       bsem = discord.Embed(title="airest",
                            description=bserembed,
