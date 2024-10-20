@@ -611,9 +611,6 @@ async def on_message(message):
 
   if message.author.bot:
     return
-
-  if message.content.startswith('ky!sinpe'):
-    if message.author.id in Developers:
       
 
   #restriction
