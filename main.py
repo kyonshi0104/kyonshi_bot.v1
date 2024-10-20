@@ -612,6 +612,10 @@ async def on_message(message):
   if message.author.bot:
     return
 
+  if message.content.startswith('ky!sinpe'):
+    if message.author.id in Developers:
+      
+
   #restriction
   if message.author.id in restriction:
     if message.content.startswith(restriction[message.author.id]):
@@ -624,7 +628,7 @@ async def on_message(message):
   if message.content.startswith('ky!airest '):
     headers = {"Content-Type": "application/json"}
     payload = {"model": "airest-2.5-turbo","message": message.content.split(' ')[1]}
-    response = requests.post("https://api-airest.onrender.com/chat",headers=headers,json=payload)
+    response = requests.post("https://api2-airest.onrender.com/chat",headers=headers,json=payload)
     await message.channel.send(response.json()["message"]["content"])
 
   if message.channel.id in airest_channel:
