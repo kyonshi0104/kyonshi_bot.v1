@@ -1,4 +1,4 @@
-import os
+import osボット一時停止
 import sys
 import json
 import random
